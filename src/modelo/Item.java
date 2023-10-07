@@ -1,11 +1,11 @@
-package clases;
+package modelo;
 
-public class ItemCompra {
+public class Item {
 	private int cantidad;
 	private Producto producto;
 	private float importe;
 	
-	public ItemCompra(int cantidad, Producto producto, float importe) {
+	public Item(int cantidad, Producto producto, float importe) {
 		this.cantidad = cantidad;
 		this.producto = producto;
 		this.importe = importe;

@@ -1,4 +1,4 @@
-package clases;
+package modelo;
 
 public enum TipoImpuesto {
 	IVA,

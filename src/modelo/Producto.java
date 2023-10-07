@@ -1,4 +1,4 @@
-package clases;
+package modelo;
 
 public class Producto {
 	private String unidad;

@@ -1,4 +1,4 @@
-package clases;
+package modelo;
 import java.util.Date;
 import java.util.Collection;
 
@@ -16,11 +16,12 @@ public class Proveedor {
 	private Collection<Producto> productos;
 	private Collection<CertificadoRetencion> certificados;
 	private float maxDeuda;
-	private Collection<Cuenta> cuentas;
+	private Collection<CuentaCorriente> cuentas;
+	private Collection<OrdenCompra> ordenesDeCompra;
 	
 	public Proveedor(int cuit, String responabilidadIva, String razonSocial, String nombre, Direccion direccion,
 			int telefono, String email, int ingresosBrutos, Date inicioActividades, Collection<Rubro> rubros,
-			Collection<Producto> productos, Collection<CertificadoRetencion> certificados, float maxDeuda, Collection<Cuenta> cuentas) {
+			Collection<Producto> productos, Collection<CertificadoRetencion> certificados, float maxDeuda, Collection<CuentaCorriente> cuentas, Collection<OrdenCompra> ordenesDeCompra) {
 		this.cuit = cuit;
 		this.responabilidadIva = responabilidadIva;
 		this.razonSocial = razonSocial;
@@ -35,6 +36,7 @@ public class Proveedor {
 		this.certificados = certificados;
 		this.maxDeuda = maxDeuda;
 		this.cuentas = cuentas;
+		this.ordenesDeCompra = ordenesDeCompra;
 	}
 
 	public int getCuit() {
@@ -141,12 +143,20 @@ public class Proveedor {
 		this.maxDeuda = maxDeuda;
 	}
 	
-	public Collection<Cuenta> getCuentas(){
+	public Collection<CuentaCorriente> getCuentas(){
 		return cuentas;
 	}
 	
-	public void setCuentas(Collection<Cuenta> cuentas) {
+	public void setCuentas(Collection<CuentaCorriente> cuentas) {
 		this.cuentas = cuentas;
+	}
+
+	public Collection<OrdenCompra> getOrdenesDeCompra() {
+		return ordenesDeCompra;
+	}
+
+	public void setOrdenesDeCompra(Collection<OrdenCompra> ordenesDeCompra) {
+		this.ordenesDeCompra = ordenesDeCompra;
 	}
 	
 	
