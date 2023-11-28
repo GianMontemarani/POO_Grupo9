@@ -19,9 +19,7 @@ public class Proveedor {
 	private List<Documento> documentos;
 
 	public Proveedor(int cuit, String razonSocial, String nombre, Direccion direccion, int telefono, String correoElectronico,
-			Date inicioActividades, List<Rubro> rubros, List<Producto> productos,
-			List<CertificadoRetencion> certificados, float maxDeuda, List<CuentaCorriente> cuentas,
-			List<Documento> documentos) {
+			Date inicioActividades, List<Rubro> rubros, float maxDeuda) {
 		this.cuit = cuit;
 		this.razonSocial = razonSocial;
 		this.nombre = nombre;
@@ -30,13 +28,13 @@ public class Proveedor {
 		this.correoElectronico = correoElectronico;
 		this.inicioActividades = inicioActividades;
 		this.rubros = rubros;
-		this.productos = productos;
-		this.certificados = certificados;
+		this.productos = null;
+		this.certificados = null;
 		this.maxDeuda = maxDeuda;
-		this.cuentas = cuentas;
-		this.documentos = documentos;
+		this.cuentas = null;
+		this.documentos = null;
 	}
-
+	
 	public int getCuit() {
 		return cuit;
 	}
