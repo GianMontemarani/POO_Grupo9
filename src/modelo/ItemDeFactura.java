@@ -1,12 +1,12 @@
 package modelo;
 
-public class Item {
+public class ItemDeFactura {
 	private int cantidad;
 	private Producto producto;
 	private float importe;
 	private Impuesto impuesto;
 
-	public Item(int cantidad, Producto producto, float importe, Impuesto impuesto) {
+	public ItemDeFactura(int cantidad, Producto producto, float importe, Impuesto impuesto) {
 		this.cantidad = cantidad;
 		this.producto = producto;
 		this.importe = importe;

@@ -3,15 +3,15 @@ package modelo;
 import java.util.List;
 import java.util.Date;
 
-public class OrdenDePago {
+public class OrdenDePago extends Documento{
 	private List<Factura> facturas;
-	private List<NotaDebito> notasDebito;
-	private List<NotaCredito> notasCredito;
+	private List<NotaDeDebito> notasDebito;
+	private List<NotaDeCredito> notasCredito;
 	private float pagoEfectivo;
 	private List<Cheque> cheques;
 	
-	public OrdenDePago(List<Factura> facturas, List<NotaDebito> notasDebito,
-			List<NotaCredito> notasCredito, float pagoEfectivo, List<Cheque> cheques, int numero, float importe, Date fecha, Proveedor proveedor) {
+	public OrdenDePago(List<Factura> facturas, List<NotaDeDebito> notasDebito,
+			List<NotaDeCredito> notasCredito, float pagoEfectivo, List<Cheque> cheques, int numero, float importe, Date fecha, Proveedor proveedor) {
 		super(numero, importe, fecha, proveedor);
 		this.facturas = facturas;
 		this.notasDebito = notasDebito;
@@ -28,19 +28,19 @@ public class OrdenDePago {
 		this.facturas = facturas;
 	}
 
-	public List<NotaDebito> getNotasDebito() {
+	public List<NotaDeDebito> getNotasDebito() {
 		return notasDebito;
 	}
 
-	public void setNotasDebito(List<NotaDebito> notasDebito) {
+	public void setNotasDebito(List<NotaDeDebito> notasDebito) {
 		this.notasDebito = notasDebito;
 	}
 
-	public List<NotaCredito> getNotasCredito() {
+	public List<NotaDeCredito> getNotasCredito() {
 		return notasCredito;
 	}
 
-	public void setNotasCredito(List<NotaCredito> notasCredito) {
+	public void setNotasCredito(List<NotaDeCredito> notasCredito) {
 		this.notasCredito = notasCredito;
 	}
 	

@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Date;
 
 public class Factura extends Documento {
-	private OrdenCompra ordenCompra;
-	private List<Item> productos;
+	private OrdenDeCompra ordenCompra;
+	private List<ItemDeFactura> productos;
 	private List<Impuesto> impuestos;
-	private List<OrdenPago> ordenDePago;
+	private List<OrdenDePago> ordenDePago;
 	private float totalARetener;
 	private List<ItemDeFactura> items;
 
-	public Factura(int numero, float importe, Date fecha, Proveedor proveedor, OrdenCompra ordenCompra,
-			List<Item> productos, List<Impuesto> impuestos, List<OrdenPago> ordenDePago,
+	public Factura(int numero, float importe, Date fecha, Proveedor proveedor, OrdenDeCompra ordenCompra,
+			List<ItemDeFactura> productos, List<Impuesto> impuestos, List<OrdenDePago> ordenDePago,
 			float totalARetener, List<ItemDeFactura> items) {
 		super(numero, importe, fecha, proveedor);
 		this.ordenCompra = ordenCompra;
@@ -23,19 +23,19 @@ public class Factura extends Documento {
 		this.items = items;
 	}
 
-	public OrdenCompra getOrdenCompra() {
+	public OrdenDeCompra getOrdenCompra() {
 		return ordenCompra;
 	}
 
-	public void setOrdenCompra(OrdenCompra ordenCompra) {
+	public void setOrdenCompra(OrdenDeCompra ordenCompra) {
 		this.ordenCompra = ordenCompra;
 	}
 
-	public List<Item> getProductos() {
+	public List<ItemDeFactura> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(List<Item> productos) {
+	public void setProductos(List<ItemDeFactura> productos) {
 		this.productos = productos;
 	}
 
@@ -47,11 +47,11 @@ public class Factura extends Documento {
 		this.impuestos = impuestos;
 	}
 
-	public List<OrdenPago> getOrdenDePago() {
+	public List<OrdenDePago> getOrdenDePago() {
 		return ordenDePago;
 	}
 
-	public void setOrdenDePago(List<OrdenPago> ordenDePago) {
+	public void setOrdenDePago(List<OrdenDePago> ordenDePago) {
 		this.ordenDePago = ordenDePago;
 	}
 
