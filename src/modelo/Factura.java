@@ -1,20 +1,24 @@
 package modelo;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class Factura extends Documento {
 	private OrdenCompra ordenCompra;
 	private Collection<Item> productos;
-	private Collection<TipoImpuesto> impuestos;
-	private OrdenPago ordenDePago;
+	private Collection<Impuesto> impuestos;
+	private Collection<OrdenPago> ordenDePago;
+	private float totalARetener;
 	
-	public Factura(int numero, float total, Proveedor proveedor, OrdenCompra ordenCompra,
-			Collection<Item> productos, Collection<TipoImpuesto> impuestos, OrdenPago ordenDePago) {
-		super(numero, total, proveedor);
+	public Factura(int numero, float importe, Date fecha, Proveedor proveedor, OrdenCompra ordenCompra,
+			Collection<Item> productos, Collection<Impuesto> impuestos, Collection<OrdenPago> ordenDePago,
+			float totalARetener) {
+		super(numero, importe, fecha, proveedor);
 		this.ordenCompra = ordenCompra;
 		this.productos = productos;
 		this.impuestos = impuestos;
 		this.ordenDePago = ordenDePago;
+		this.totalARetener = totalARetener;
 	}
 
 	public OrdenCompra getOrdenCompra() {
@@ -33,21 +37,27 @@ public class Factura extends Documento {
 		this.productos = productos;
 	}
 
-	public Collection<TipoImpuesto> getImpuestos() {
+	public Collection<Impuesto> getImpuestos() {
 		return impuestos;
 	}
 
-	public void setImpuestos(Collection<TipoImpuesto> impuestos) {
+	public void setImpuestos(Collection<Impuesto> impuestos) {
 		this.impuestos = impuestos;
 	}
 
-	public OrdenPago getOrdenDePago() {
+	public Collection<OrdenPago> getOrdenDePago() {
 		return ordenDePago;
 	}
 
-	public void setOrdenDePago(OrdenPago ordenDePago) {
+	public void setOrdenDePago(Collection<OrdenPago> ordenDePago) {
 		this.ordenDePago = ordenDePago;
 	}
-	
-	
+
+	public float getTotalARetener() {
+		return totalARetener;
+	}
+
+	public void setTotalARetener(float totalARetener) {
+		this.totalARetener = totalARetener;
+	}	
 }

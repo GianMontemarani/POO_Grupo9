@@ -2,18 +2,16 @@ package modelo;
 
 import java.util.Date;
 
-public class Cheque {
+public class Cheque extends Documento{
 	private Boolean propio;
-	private Date fechaEmision;
-	private Date fechaVencimiento;
-	private float importe;
+	private Date vencimiento;
 	private String firmante;
 	
-	public Cheque(Boolean propio, Date fechaEmision, Date fechaVencimiento, float importe, String firmante) {
+	public Cheque(int numero, float importe, Date fecha, Proveedor proveedor, Boolean propio, Date vencimiento,
+			String firmante) {
+		super(numero, importe, fecha, proveedor);
 		this.propio = propio;
-		this.fechaEmision = fechaEmision;
-		this.fechaVencimiento = fechaVencimiento;
-		this.importe = importe;
+		this.vencimiento = vencimiento;
 		this.firmante = firmante;
 	}
 
@@ -25,35 +23,19 @@ public class Cheque {
 		this.propio = propio;
 	}
 
-	public Date getFechaEmision() {
-		return fechaEmision;
+	public Date getVencimiento() {
+		return vencimiento;
 	}
 
-	public void setFechaEmision(Date fechaEmision) {
-		this.fechaEmision = fechaEmision;
+	public void setVencimiento(Date vencimiento) {
+		this.vencimiento = vencimiento;
 	}
 
-	public Date getFechaVencimiento() {
-		return fechaVencimiento;
-	}
-
-	public void setFechaVencimiento(Date fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
-	}
-
-	public float getImporte() {
-		return importe;
-	}
-
-	public void setImporte(float importe) {
-		this.importe = importe;
-	}
-
-	public String getFirmante() {
+	public String getString() {
 		return firmante;
 	}
 
-	public void setFirmante(String firmante) {
+	public void setString(String firmante) {
 		this.firmante = firmante;
-	}
+	}	
 }

@@ -1,9 +1,11 @@
 package modelo;
 
-public class NotaDebito extends Documento {
+import java.util.Date;
 
-	public NotaDebito(int numero, float total, Proveedor proveedor) {
-		super(numero, total, proveedor);
-	}
+public class NotaDebito extends Documento {
 	
+	public NotaDebito(int numero, float importe, Date fecha, Proveedor proveedor) {
+		super(numero, importe, fecha, proveedor);
+	}
+
 }

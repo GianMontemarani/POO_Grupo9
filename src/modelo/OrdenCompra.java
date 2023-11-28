@@ -1,12 +1,13 @@
 package modelo;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class OrdenCompra extends Documento{
 	private Collection<Item> items;
 	
-	public OrdenCompra(Collection<Item> items, int numero, float total, Proveedor proveedor) {
-		super(numero, total, proveedor);
+	public OrdenCompra(int numero, float importe, Date fecha, Proveedor proveedor, Collection<Item> items) {
+		super(numero, importe, fecha, proveedor);
 		this.items = items;
 	}
 

@@ -6,7 +6,6 @@ public class OrdenPago {
 	private Collection<Factura> facturas;
 	private Collection<NotaDebito> notasDebitos;
 	private Collection<NotaCredito> notasCreditos;
-	private float total;
 	private float pagoEfectivo;
 	private Collection<Cheque> cheques;
 	
@@ -15,7 +14,6 @@ public class OrdenPago {
 		this.facturas = facturas;
 		this.notasDebitos = notasDebitos;
 		this.notasCreditos = notasCreditos;
-		this.total = total;
 		this.pagoEfectivo = pagoEfectivo;
 		this.cheques = cheques;
 	}
@@ -43,15 +41,7 @@ public class OrdenPago {
 	public void setNotasCreditos(Collection<NotaCredito> notasCreditos) {
 		this.notasCreditos = notasCreditos;
 	}
-
-	public float getTotal() {
-		return total;
-	}
-
-	public void setTotal(float total) {
-		this.total = total;
-	}
-
+	
 	public float getPagoEfectivo() {
 		return pagoEfectivo;
 	}

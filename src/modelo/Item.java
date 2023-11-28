@@ -4,11 +4,13 @@ public class Item {
 	private int cantidad;
 	private Producto producto;
 	private float importe;
-	
-	public Item(int cantidad, Producto producto, float importe) {
+	private Impuesto impuesto;
+
+	public Item(int cantidad, Producto producto, float importe, Impuesto impuesto) {
 		this.cantidad = cantidad;
 		this.producto = producto;
 		this.importe = importe;
+		this.impuesto = impuesto;
 	}
 
 	public int getCantidad() {
@@ -33,5 +35,13 @@ public class Item {
 
 	public void setImporte(float importe) {
 		this.importe = importe;
+	}
+
+	public Impuesto getImpuesto() {
+		return impuesto;
+	}
+
+	public void setImpuesto(Impuesto impuesto) {
+		this.impuesto = impuesto;
 	}
 }

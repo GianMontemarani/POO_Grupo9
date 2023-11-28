@@ -4,39 +4,36 @@ import java.util.Collection;
 
 public class Proveedor {
 	private int cuit;
-	private String responabilidadIva;
 	private String razonSocial;
 	private String nombre;
 	private Direccion direccion;
 	private int telefono;
 	private String email;
-	private int ingresosBrutos;
 	private Date inicioActividades;
 	private Collection<Rubro> rubros;
 	private Collection<Producto> productos;
 	private Collection<CertificadoRetencion> certificados;
 	private float maxDeuda;
 	private Collection<CuentaCorriente> cuentas;
-	private Collection<OrdenCompra> ordenesDeCompra;
-	
-	public Proveedor(int cuit, String responabilidadIva, String razonSocial, String nombre, Direccion direccion,
-			int telefono, String email, int ingresosBrutos, Date inicioActividades, Collection<Rubro> rubros,
-			Collection<Producto> productos, Collection<CertificadoRetencion> certificados, float maxDeuda, Collection<CuentaCorriente> cuentas, Collection<OrdenCompra> ordenesDeCompra) {
+	private Collection<Documento> documentos;
+
+	public Proveedor(int cuit, String razonSocial, String nombre, Direccion direccion, int telefono, String email,
+			Date inicioActividades, Collection<Rubro> rubros, Collection<Producto> productos,
+			Collection<CertificadoRetencion> certificados, float maxDeuda, Collection<CuentaCorriente> cuentas,
+			Collection<Documento> documentos) {
 		this.cuit = cuit;
-		this.responabilidadIva = responabilidadIva;
 		this.razonSocial = razonSocial;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.email = email;
-		this.ingresosBrutos = ingresosBrutos;
 		this.inicioActividades = inicioActividades;
 		this.rubros = rubros;
 		this.productos = productos;
 		this.certificados = certificados;
 		this.maxDeuda = maxDeuda;
 		this.cuentas = cuentas;
-		this.ordenesDeCompra = ordenesDeCompra;
+		this.documentos = documentos;
 	}
 
 	public int getCuit() {
@@ -45,14 +42,6 @@ public class Proveedor {
 
 	public void setCuit(int cuit) {
 		this.cuit = cuit;
-	}
-
-	public String getResponabilidadIva() {
-		return responabilidadIva;
-	}
-
-	public void setResponabilidadIva(String responabilidadIva) {
-		this.responabilidadIva = responabilidadIva;
 	}
 
 	public String getRazonSocial() {
@@ -95,14 +84,6 @@ public class Proveedor {
 		this.email = email;
 	}
 
-	public int getIngresosBrutos() {
-		return ingresosBrutos;
-	}
-
-	public void setIngresosBrutos(int ingresosBrutos) {
-		this.ingresosBrutos = ingresosBrutos;
-	}
-
 	public Date getInicioActividades() {
 		return inicioActividades;
 	}
@@ -142,22 +123,20 @@ public class Proveedor {
 	public void setMaxDeuda(float maxDeuda) {
 		this.maxDeuda = maxDeuda;
 	}
-	
-	public Collection<CuentaCorriente> getCuentas(){
+
+	public Collection<CuentaCorriente> getCuentas() {
 		return cuentas;
 	}
-	
+
 	public void setCuentas(Collection<CuentaCorriente> cuentas) {
 		this.cuentas = cuentas;
 	}
 
-	public Collection<OrdenCompra> getOrdenesDeCompra() {
-		return ordenesDeCompra;
+	public Collection<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setOrdenesDeCompra(Collection<OrdenCompra> ordenesDeCompra) {
-		this.ordenesDeCompra = ordenesDeCompra;
+	public void setDocumentos(Collection<Documento> documentos) {
+		this.documentos = documentos;
 	}
-	
-	
 }

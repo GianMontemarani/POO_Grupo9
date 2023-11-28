@@ -1,13 +1,17 @@
 package modelo;
 
+import java.util.Date;
+
 public abstract class Documento {
 	private int numero;
-	private float total;
+	private float importe;
+	private Date fecha;
 	private Proveedor proveedor;
 	
-	protected Documento(int numero, float total, Proveedor proveedor) {
+	protected Documento(int numero, float importe, Date fecha, Proveedor proveedor) {
 		this.numero = numero;
-		this.total = total;
+		this.importe = importe;
+		this.fecha = fecha;
 		this.proveedor = proveedor;
 	}
 
@@ -19,12 +23,20 @@ public abstract class Documento {
 		this.numero = numero;
 	}
 
-	public float getTotal() {
-		return total;
+	public float getImporte() {
+		return importe;
 	}
 
-	public void setTotal(float total) {
-		this.total = total;
+	public void setImporte(float importe) {
+		this.importe = importe;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public Proveedor getProveedor() {
@@ -34,6 +46,4 @@ public abstract class Documento {
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
 	}
-	
-	
 }

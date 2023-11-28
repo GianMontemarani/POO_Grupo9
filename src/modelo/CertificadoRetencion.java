@@ -6,9 +6,9 @@ public class CertificadoRetencion {
 	private Date fechaInicio;
 	private Date fechaVencimiento;
 	private Boolean activo;
-	private TipoImpuesto impuesto;
+	private Impuesto impuesto;
 	
-	public CertificadoRetencion(Date fechaInicio, Date fechaVencimiento, Boolean activo, TipoImpuesto impuesto) {
+	public CertificadoRetencion(Date fechaInicio, Date fechaVencimiento, Boolean activo, Impuesto impuesto) {
 		this.fechaInicio = fechaInicio;
 		this.fechaVencimiento = fechaVencimiento;
 		this.activo = activo;
@@ -39,12 +39,11 @@ public class CertificadoRetencion {
 		this.activo = activo;
 	}
 
-	public TipoImpuesto getImpuesto() {
+	public Impuesto getImpuesto() {
 		return impuesto;
 	}
 
-	public void setImpuesto(TipoImpuesto impuesto) {
+	public void setImpuesto(Impuesto impuesto) {
 		this.impuesto = impuesto;
 	}
-
 }
