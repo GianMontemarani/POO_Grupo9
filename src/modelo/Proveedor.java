@@ -1,6 +1,7 @@
 package modelo;
+
 import java.util.Date;
-import java.util.Collection;
+import java.util.List;
 
 public class Proveedor {
 	private int cuit;
@@ -8,25 +9,25 @@ public class Proveedor {
 	private String nombre;
 	private Direccion direccion;
 	private int telefono;
-	private String email;
+	private String correoElectronico;
 	private Date inicioActividades;
-	private Collection<Rubro> rubros;
-	private Collection<Producto> productos;
-	private Collection<CertificadoRetencion> certificados;
+	private List<Rubro> rubros;
+	private List<Producto> productos;
+	private List<CertificadoRetencion> certificados;
 	private float maxDeuda;
-	private Collection<CuentaCorriente> cuentas;
-	private Collection<Documento> documentos;
+	private List<CuentaCorriente> cuentas;
+	private List<Documento> documentos;
 
-	public Proveedor(int cuit, String razonSocial, String nombre, Direccion direccion, int telefono, String email,
-			Date inicioActividades, Collection<Rubro> rubros, Collection<Producto> productos,
-			Collection<CertificadoRetencion> certificados, float maxDeuda, Collection<CuentaCorriente> cuentas,
-			Collection<Documento> documentos) {
+	public Proveedor(int cuit, String razonSocial, String nombre, Direccion direccion, int telefono, String correoElectronico,
+			Date inicioActividades, List<Rubro> rubros, List<Producto> productos,
+			List<CertificadoRetencion> certificados, float maxDeuda, List<CuentaCorriente> cuentas,
+			List<Documento> documentos) {
 		this.cuit = cuit;
 		this.razonSocial = razonSocial;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.email = email;
+		this.correoElectronico = correoElectronico;
 		this.inicioActividades = inicioActividades;
 		this.rubros = rubros;
 		this.productos = productos;
@@ -76,12 +77,12 @@ public class Proveedor {
 		this.telefono = telefono;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCorreoElectronico() {
+		return correoElectronico;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCorreoElectronico(String correoElectronico) {
+		this.correoElectronico = correoElectronico;
 	}
 
 	public Date getInicioActividades() {
@@ -92,27 +93,27 @@ public class Proveedor {
 		this.inicioActividades = inicioActividades;
 	}
 
-	public Collection<Rubro> getRubros() {
+	public List<Rubro> getRubros() {
 		return rubros;
 	}
 
-	public void setRubros(Collection<Rubro> rubros) {
+	public void setRubros(List<Rubro> rubros) {
 		this.rubros = rubros;
 	}
 
-	public Collection<Producto> getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(Collection<Producto> productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 
-	public Collection<CertificadoRetencion> getCertificados() {
+	public List<CertificadoRetencion> getCertificados() {
 		return certificados;
 	}
 
-	public void setCertificados(Collection<CertificadoRetencion> certificados) {
+	public void setCertificados(List<CertificadoRetencion> certificados) {
 		this.certificados = certificados;
 	}
 
@@ -124,19 +125,19 @@ public class Proveedor {
 		this.maxDeuda = maxDeuda;
 	}
 
-	public Collection<CuentaCorriente> getCuentas() {
+	public List<CuentaCorriente> getCuentas() {
 		return cuentas;
 	}
 
-	public void setCuentas(Collection<CuentaCorriente> cuentas) {
+	public void setCuentas(List<CuentaCorriente> cuentas) {
 		this.cuentas = cuentas;
 	}
 
-	public Collection<Documento> getDocumentos() {
+	public List<Documento> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(Collection<Documento> documentos) {
+	public void setDocumentos(List<Documento> documentos) {
 		this.documentos = documentos;
 	}
 }

@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Cheque extends Documento{
 	private Boolean propio;
-	private Date vencimiento;
+	private Date fechaVencimiento;
 	private String firmante;
 	
-	public Cheque(int numero, float importe, Date fecha, Proveedor proveedor, Boolean propio, Date vencimiento,
+	public Cheque(int numero, float importe, Date fecha, Proveedor proveedor, Boolean propio, Date fechaVencimiento,
 			String firmante) {
 		super(numero, importe, fecha, proveedor);
 		this.propio = propio;
-		this.vencimiento = vencimiento;
+		this.fechaVencimiento = fechaVencimiento;
 		this.firmante = firmante;
 	}
 
@@ -23,12 +23,12 @@ public class Cheque extends Documento{
 		this.propio = propio;
 	}
 
-	public Date getVencimiento() {
-		return vencimiento;
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
 	}
 
-	public void setVencimiento(Date vencimiento) {
-		this.vencimiento = vencimiento;
+	public void setFechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
 	}
 
 	public String getString() {

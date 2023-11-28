@@ -1,24 +1,26 @@
 package modelo;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Date;
 
 public class Factura extends Documento {
 	private OrdenCompra ordenCompra;
-	private Collection<Item> productos;
-	private Collection<Impuesto> impuestos;
-	private Collection<OrdenPago> ordenDePago;
+	private List<Item> productos;
+	private List<Impuesto> impuestos;
+	private List<OrdenPago> ordenDePago;
 	private float totalARetener;
-	
+	private List<ItemDeFactura> items;
+
 	public Factura(int numero, float importe, Date fecha, Proveedor proveedor, OrdenCompra ordenCompra,
-			Collection<Item> productos, Collection<Impuesto> impuestos, Collection<OrdenPago> ordenDePago,
-			float totalARetener) {
+			List<Item> productos, List<Impuesto> impuestos, List<OrdenPago> ordenDePago,
+			float totalARetener, List<ItemDeFactura> items) {
 		super(numero, importe, fecha, proveedor);
 		this.ordenCompra = ordenCompra;
 		this.productos = productos;
 		this.impuestos = impuestos;
 		this.ordenDePago = ordenDePago;
 		this.totalARetener = totalARetener;
+		this.items = items;
 	}
 
 	public OrdenCompra getOrdenCompra() {
@@ -29,27 +31,27 @@ public class Factura extends Documento {
 		this.ordenCompra = ordenCompra;
 	}
 
-	public Collection<Item> getProductos() {
+	public List<Item> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(Collection<Item> productos) {
+	public void setProductos(List<Item> productos) {
 		this.productos = productos;
 	}
 
-	public Collection<Impuesto> getImpuestos() {
+	public List<Impuesto> getImpuestos() {
 		return impuestos;
 	}
 
-	public void setImpuestos(Collection<Impuesto> impuestos) {
+	public void setImpuestos(List<Impuesto> impuestos) {
 		this.impuestos = impuestos;
 	}
 
-	public Collection<OrdenPago> getOrdenDePago() {
+	public List<OrdenPago> getOrdenDePago() {
 		return ordenDePago;
 	}
 
-	public void setOrdenDePago(Collection<OrdenPago> ordenDePago) {
+	public void setOrdenDePago(List<OrdenPago> ordenDePago) {
 		this.ordenDePago = ordenDePago;
 	}
 
@@ -59,5 +61,13 @@ public class Factura extends Documento {
 
 	public void setTotalARetener(float totalARetener) {
 		this.totalARetener = totalARetener;
-	}	
+	}
+
+	public List<ItemDeFactura> getItems() {
+		return items;
+	}
+
+	public void setItems(List<ItemDeFactura> items) {
+		this.items = items;
+	}
 }
