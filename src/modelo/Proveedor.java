@@ -3,6 +3,8 @@ package modelo;
 import java.util.Date;
 import java.util.List;
 
+import dto.ProveedorDto;
+
 public class Proveedor {
 	private int cuit;
 	private String razonSocial;
@@ -31,6 +33,23 @@ public class Proveedor {
 		this.productos = null;
 		this.certificados = null;
 		this.maxDeuda = maxDeuda;
+		this.cuentas = null;
+		this.documentos = null;
+	}
+	
+	public Proveedor(ProveedorDto proveedorDto) {
+		Direccion direccion = new Direccion(proveedorDto.getCalle(), proveedorDto.getAltura(), proveedorDto.getCodigoPostal(), proveedorDto.getPais(), proveedorDto.getProvincia(), proveedorDto.getCiudad());
+		this.cuit = proveedorDto.getCuit();
+		this.razonSocial = proveedorDto.getRazonSocial();
+		this.nombre = proveedorDto.getNombre();
+		this.direccion = direccion;
+		this.telefono = proveedorDto.getTelefono();
+		this.correoElectronico = proveedorDto.getCorreoElectronico();
+		this.inicioActividades = proveedorDto.getInicioActividades();
+		this.rubros = proveedorDto.getRubros();
+		this.productos = null;
+		this.certificados = null;
+		this.maxDeuda = proveedorDto.getMaxDeuda();
 		this.cuentas = null;
 		this.documentos = null;
 	}

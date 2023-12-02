@@ -3,11 +3,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.modelmbean.ModelMBean;
 
 import dao.ProveedorDao;
 import dto.ProveedorDto;
-import modelo.Direccion;
 import modelo.Proveedor;
 
 public class ProveedorController {
@@ -17,7 +15,7 @@ public class ProveedorController {
 		
 		private static ProveedorDao proveedorDao;
 		
-		private ProveedorController(List<Proveedor> modelList) {this.proveedoresList = modelList;}
+		private ProveedorController(List<Proveedor> modelList) {proveedoresList = modelList;}
 		
 		public static synchronized ProveedorController getInstance() throws Exception{
 			if(INSTANCE == null) {
@@ -29,7 +27,7 @@ public class ProveedorController {
 		
 		public List<ProveedorDto> getAll() throws Exception {
 	        List<ProveedorDto> dtoList = new ArrayList<>();
-	        for (Proveedor proveedor : proveedorDao.getAll(Proveedor.class)) {
+	        for (Proveedor proveedor : proveedoresList) {
 	            dtoList.add(toDto(proveedor));
 	        }
 	        return dtoList;
@@ -47,17 +45,18 @@ public class ProveedorController {
 		public void addProveedor(ProveedorDto proveedorDto) {
 			try {
 				if(getByCuit(proveedorDto.getCuit()) == null){
+			           proveedoresList.add(toModel(proveedorDto));
 			           proveedorDao.save(toModel(proveedorDto));
-			        }
+			    }else {
+			        System.out.println("El cuit del proveedor ingresado ya existe");	
+			    }
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {
-			Direccion direccion = new Direccion(proveedorDto.getCalle(), proveedorDto.getAltura(), proveedorDto.getCodigoPostal(), proveedorDto.getPais(), proveedorDto.getProvincia(), proveedorDto.getCiudad());
-			Proveedor proveedor = new Proveedor(proveedorDto.getCuit(), proveedorDto.getRazonSocial(), proveedorDto.getNombre(), direccion, proveedorDto.getTelefono(), proveedorDto.getCorreoElectronico(), proveedorDto.getInicioActividades(), proveedorDto.getRubros(), proveedorDto.getMaxDeuda());
-			return proveedor;
+			return new Proveedor(proveedorDto);
 		}
 		
 		public static ProveedorDto toDto(Proveedor proveedor){
