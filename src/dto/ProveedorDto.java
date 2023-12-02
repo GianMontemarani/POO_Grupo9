@@ -3,9 +3,10 @@ package dto;
 import java.util.Date;
 import java.util.List;
 
+import modelo.Proveedor;
 import modelo.Rubro;
 
-public class ProveedorDTO {
+public class ProveedorDto {
 	private int cuit;
 	private String razonSocial;
 	private String nombre;
@@ -21,7 +22,7 @@ public class ProveedorDTO {
 	private String provincia;
 	private String ciudad;
 	
-	public ProveedorDTO(int cuit, String razonSocial, String nombre, int telefono, String correoElectronico,
+	public ProveedorDto(int cuit, String razonSocial, String nombre, int telefono, String correoElectronico,
 			Date inicioActividades, List<Rubro> rubros, float maxDeuda, String calle, int altura, int codigoPostal,
 			String pais, String provincia, String ciudad) {
 		this.cuit = cuit;
@@ -38,6 +39,23 @@ public class ProveedorDTO {
 		this.pais = pais;
 		this.provincia = provincia;
 		this.ciudad = ciudad;
+	}
+	
+	public ProveedorDto(Proveedor proveedor) {
+		this.cuit = proveedor.getCuit();
+		this.razonSocial = proveedor.getRazonSocial();
+		this.nombre = proveedor.getNombre();
+		this.telefono = proveedor.getTelefono();
+		this.correoElectronico = proveedor.getCorreoElectronico();
+		this.inicioActividades =proveedor.getInicioActividades();
+		this.rubros = proveedor.getRubros();
+		this.maxDeuda = proveedor.getMaxDeuda();
+		this.calle = proveedor.getDireccion().getCalle();
+		this.altura = proveedor.getDireccion().getAltura();
+		this.codigoPostal = proveedor.getDireccion().getCodigoPostal();
+		this.pais = proveedor.getDireccion().getPais();
+		this.provincia = proveedor.getDireccion().getProvincia();
+		this.ciudad = proveedor.getDireccion().getCiudad();
 	}
 
 	public int getCuit() {
@@ -152,5 +170,9 @@ public class ProveedorDTO {
 		this.ciudad = ciudad;
 	}
 	
+	@Override
+	public String toString() {
+		return "Cuit: " + Integer.toString(this.getCuit()) + "; Nombre: " + this.getNombre();
+	}
 	
 }
