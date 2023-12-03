@@ -3,6 +3,7 @@ package ui;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.constant.DirectMethodHandleDesc;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,21 +23,15 @@ public class Main {
 		
 		// Creo el JFrame
 		JFrame frame = new JFrame("Programa");
-		frame.setSize(350, 200);
+		frame.setSize(600, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		/* Creo un """"Div"""" */
 		JPanel panel = new JPanel(new CardLayout());
 		frame.add(panel);
-
-		/* login logUI = new login(panel); */
-
-		// Configuración del submenú, como agregar acciones, etc.
-
-		// Agregar la tabla al panel principal al hacer clic en el submenú
-
 		panel.setLayout(null);
 
+		
 		/* Usuarios */
 		JLabel usuario = new JLabel("Usuario");
 		/* (x, y, largo, ancho) */
@@ -64,6 +59,8 @@ public class Main {
 		/* (x, y, largo, ancho) */
 		botonLogin.setBounds(100, 80, 80, 25);
 		panel.add(botonLogin);
+		
+		/* maneja la validacion de credenciales en el LOGIN*/ 
 		botonLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -75,14 +72,17 @@ public class Main {
 				
 				UsuarioDto user = usuarioController.login(new UsuarioDto(username, password));
 				
+				/* LOGIN Correcto */
 				if (user != null) {
 					System.out.println("good");
 					panel.removeAll(); 
 					panel.setLayout(null);
 					menu menus = new menu();
 					JMenuBar menuBar = new JMenuBar();
-					menuBar.add(menus.menuLogin(panel));
+					
+					/* Menu bars */
 					menuBar.add(menus.menuProveedor(panel));
+					menuBar.add(menus.menuProducto(panel));
 
 					frame.setJMenuBar(menuBar);
 					frame.setVisible(true);

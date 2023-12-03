@@ -10,19 +10,6 @@ import javax.swing.JTable;
 public class menu {
 	private JMenu menu;
 	private JPanel panel;
-	private JMenuItem test;
-	private JMenuItem test2;
-	public JMenu menuLogin(JPanel panel) {
-		this.panel = panel;
-
-		menu = new JMenu("Login");
-
-		// Submenú Proveedores
-
-		login loginScreen = new login(panel);
-		menu.add(loginScreen.getSubMenu());
-		return menu;
-	}
 	
 	public JMenu menuProveedor(JPanel panel) {
 		this.panel = panel;
@@ -34,6 +21,22 @@ public class menu {
 		proveedor proveedorScreen = new proveedor(panel);
 		menu.add(proveedorScreen.getAgregar());
 		menu.add(proveedorScreen.getQuitar());
+	
+		
+		return menu;
+	}
+	
+	
+	public JMenu menuProducto(JPanel panel) {
+		this.panel = panel;
+
+		menu = new JMenu("Producto");
+
+
+
+		producto productoScreen = new producto(panel);
+		menu.add(productoScreen.getAgregar());
+		menu.add(productoScreen.getQuitar());
 	
 		
 		return menu;
