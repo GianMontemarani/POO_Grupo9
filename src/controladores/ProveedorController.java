@@ -25,7 +25,7 @@ public class ProveedorController {
 			return INSTANCE;
 		}
 		
-		public List<ProveedorDto> getAll() throws Exception {
+		public List<ProveedorDto> getAll() {
 	        List<ProveedorDto> dtoList = new ArrayList<>();
 	        for (Proveedor proveedor : proveedoresList) {
 	            dtoList.add(toDto(proveedor));

@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class producto {
+public class ProductoView {
 
 	private JMenuItem agregarProducto;
 	private JMenuItem quitarProducto;
 	private JPanel panel;
 
-	public producto(JPanel panel) {
+	public ProductoView(JPanel panel) {
 		this.panel = panel;
 
 		agregarProducto = new JMenuItem("Agregar");

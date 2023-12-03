@@ -10,6 +10,7 @@ import dao.NotaDeCreditoDao;
 import dao.NotaDeDebitoDao;
 import dao.OrdenDeCompraDao;
 import dto.FacturaDto;
+import dto.NotaDto;
 import modelo.Cheque;
 import modelo.Factura;
 import modelo.NotaDeCredito;
@@ -74,6 +75,43 @@ public class DocumentoController {
 		}
 	}
 	
+	public List<NotaDto> geNotasDeCredito() throws Exception{
+		List<NotaDto> dtoList = new ArrayList<>();
+        for (NotaDeCredito notaDeCredito : notasDeCredito) {
+            dtoList.add(toDto(notaDeCredito));
+        }
+        return dtoList;
+	}
+	
+	public List<NotaDto> geNotasDeDebito() throws Exception{
+		List<NotaDto> dtoList = new ArrayList<>();
+        for (NotaDeDebito notaDeDebito : notasDeDebito) {
+            dtoList.add(toDto(notaDeDebito));
+        }
+        return dtoList;
+	}
+	
+	public void addNotaCredito(NotaDto notaDto) {
+		try {
+			NotaDeCredito notaDeCredito = new NotaDeCredito(notaDto, notasDeCredito.size()+1);
+			notasDeCredito.add(notaDeCredito);
+			notaDeCreditoDao.save(notaDeCredito);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addNotaDebito(NotaDto notaDto) {
+		try {
+			NotaDeDebito notaDeDebito = new NotaDeDebito(notaDto, notasDeDebito.size()+1);
+			notasDeDebito.add(notaDeDebito);
+			notaDeDebitoDao.save(notaDeDebito);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	private static String getPathOutModel(String name){
         String dir = "./datos/";
         return  new File(dir+name+".json").getPath();
@@ -81,6 +119,14 @@ public class DocumentoController {
 	
 	public static FacturaDto toDto(Factura factura){
         return new FacturaDto(factura);
+    }
+	
+	public static NotaDto toDto(NotaDeDebito notaDeDebito){
+        return new NotaDto(notaDeDebito);
+    }
+	
+	public static NotaDto toDto(NotaDeCredito notaDeCredito){
+        return new NotaDto(notaDeCredito);
     }
 	
 	private static List<Factura> initFacturas(){

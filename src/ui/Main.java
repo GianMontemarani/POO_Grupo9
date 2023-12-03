@@ -3,7 +3,6 @@ package ui;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.constant.DirectMethodHandleDesc;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,46 +20,40 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		UsuarioController usuarioController = UsuarioController.getInstance();
 		
-		// Creo el JFrame
-		JFrame frame = new JFrame("Programa");
-		frame.setSize(600, 500);
+		//Creo el JFrame
+		JFrame frame = new JFrame("Gestion Proveedores");
+		frame.setSize(300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		/* Creo un """"Div"""" */
+		//Panel Login
 		JPanel panel = new JPanel(new CardLayout());
 		frame.add(panel);
 		panel.setLayout(null);
 
 		
-		/* Usuarios */
+		//Usuario label y field
 		JLabel usuario = new JLabel("Usuario");
-		/* (x, y, largo, ancho) */
-		usuario.setBounds(10, 20, 80, 25);
+		usuario.setBounds(25, 25, 80, 25);
 		panel.add(usuario);
-
 		JTextField usuarioTexto = new JTextField(20);
-		/* (x, y, largo, ancho) */
 		usuarioTexto.setBounds(100, 20, 165, 25);
 		panel.add(usuarioTexto);
 
-		/* Contraseña */
+		//Contraseña label y field
 		JLabel password = new JLabel("Contraseña");
-		/* (x, y, largo, ancho) */
 		password.setBounds(10, 50, 80, 25);
 		panel.add(password);
-
 		JPasswordField passwordText = new JPasswordField(20);
-		/* (x, y, largo, ancho) */
 		passwordText.setBounds(100, 50, 165, 25);
 		panel.add(passwordText);
 
-		/* boton que triggerea el revisar user y pw */
-		JButton botonLogin = new JButton("entrar");
-		/* (x, y, largo, ancho) */
+		//Boton login
+		JButton botonLogin = new JButton("Entrar");
 		botonLogin.setBounds(100, 80, 80, 25);
 		panel.add(botonLogin);
 		
-		/* maneja la validacion de credenciales en el LOGIN*/ 
+		
+		//Maneja la validacion de credenciales en el LOGIN
 		botonLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -68,24 +61,35 @@ public class Main {
 				char[] passwordChars = passwordText.getPassword();
 				String password = new String(passwordChars);
 
-				System.out.println(username + " " + password);
+				System.out.println("Intento de login:");
+				System.out.println("Usuario:" + username + ", Password: " + password);
 				
 				UsuarioDto user = usuarioController.login(new UsuarioDto(username, password));
 				
-				/* LOGIN Correcto */
 				if (user != null) {
-					System.out.println("good");
-					panel.removeAll(); 
-					panel.setLayout(null);
-					menu menus = new menu();
-					JMenuBar menuBar = new JMenuBar();
+					System.out.println("Login exitoso");
+					try {
+						ProveedorController pController = ProveedorController.getInstance();
+						ProveedorView pView = new ProveedorView(panel);
+						
+						panel.removeAll();
+						panel.setLayout(null);
+						MenuApp menu = new MenuApp();
+						JMenuBar menuBar = new JMenuBar();
+						
+						/* Menu bars */
+						menuBar.add(menu.menuProveedor(panel));
+						menuBar.add(menu.menuProducto(panel));
+						
+						pView.listar(pController);
+						
+						frame.setSize(1000, 750);
+						frame.setJMenuBar(menuBar);
+						frame.setVisible(true);
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
 					
-					/* Menu bars */
-					menuBar.add(menus.menuProveedor(panel));
-					menuBar.add(menus.menuProducto(panel));
-
-					frame.setJMenuBar(menuBar);
-					frame.setVisible(true);
 				} else {
 					System.out.println("bad");
 				}

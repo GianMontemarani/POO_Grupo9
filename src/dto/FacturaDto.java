@@ -2,7 +2,7 @@ package dto;
 
 import java.util.List;
 
-import modelo.Documento;
+
 import modelo.Factura;
 import modelo.Impuesto;
 import modelo.ItemDeFactura;
@@ -12,7 +12,11 @@ import modelo.Proveedor;
 
 import java.util.Date;
 
-public class FacturaDto extends Documento {
+public class FacturaDto{
+	private int numero;
+	private float importe;
+	private Date fecha;
+	private Proveedor proveedor;
 	private OrdenDeCompra ordenCompra;
 	private List<ItemDeFactura> productos;
 	private List<Impuesto> impuestos;
@@ -23,7 +27,9 @@ public class FacturaDto extends Documento {
 	public FacturaDto(float importe, Date fecha, Proveedor proveedor, OrdenDeCompra ordenCompra,
 			List<ItemDeFactura> productos, List<Impuesto> impuestos, List<OrdenDePago> ordenDePago,
 			float totalARetener, List<ItemDeFactura> items) {
-		super(importe, fecha, proveedor);
+		this.importe = importe;
+		this.fecha = fecha;
+		this.proveedor = proveedor;
 		this.ordenCompra = ordenCompra;
 		this.productos = productos;
 		this.impuestos = impuestos;
@@ -33,13 +39,48 @@ public class FacturaDto extends Documento {
 	}
 
 	public FacturaDto(Factura factura) {
-		super(factura.getNumero(), factura.getImporte(), factura.getFecha(), factura.getProveedor());
+		this.numero= factura.getNumero();
+		this.importe = factura.getImporte();
+		this.fecha = factura.getFecha();
+		this.proveedor =  factura.getProveedor();
 		this.ordenCompra = factura.getOrdenCompra();
 		this.productos = factura.getProductos();
 		this.impuestos = factura.getImpuestos();
 		this.ordenDePago = factura.getOrdenDePago();
 		this.totalARetener = factura.getTotalARetener();
 		this.items = factura.getItems();
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public float getImporte() {
+		return importe;
+	}
+
+	public void setImporte(float importe) {
+		this.importe = importe;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
 	}
 
 	public OrdenDeCompra getOrdenCompra() {
