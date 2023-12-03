@@ -8,6 +8,12 @@ public abstract class Documento {
 	private Date fecha;
 	private Proveedor proveedor;
 	
+	protected Documento(float importe, Date fecha, Proveedor proveedor) {
+		this.importe = importe;
+		this.fecha = fecha;
+		this.proveedor = proveedor;
+	}
+	
 	protected Documento(int numero, float importe, Date fecha, Proveedor proveedor) {
 		this.numero = numero;
 		this.importe = importe;

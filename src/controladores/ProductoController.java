@@ -15,7 +15,7 @@ public class ProductoController {
 	
 	private static ProductoDao productosDao;
 	
-	private ProductoController(List<Producto> modelList) {productosList = modelList;}
+	private ProductoController(List<Producto> productosList) {ProductoController.productosList = productosList;}
 	
 	public static synchronized ProductoController getInstance() throws Exception{
 		if(INSTANCE == null) {

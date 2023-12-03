@@ -1,25 +1,25 @@
-package modelo;
+package dto;
 
-import dto.ImpuestoDto;
+import modelo.Impuesto;
+import modelo.TipoImpuesto;
 
-public class Impuesto {
+public class ImpuestoDto {
 	private int id;
 	private String nombre;
 	private float porcentaje;
 	private TipoImpuesto tipoImpuesto;
 	
-	public Impuesto(int id, String nombre, float porcentaje, TipoImpuesto tipoImpuesto) {
-		this.id = id;
+	public ImpuestoDto(String nombre, float porcentaje, TipoImpuesto tipoImpuesto) {
 		this.nombre = nombre;
 		this.porcentaje = porcentaje;
 		this.tipoImpuesto = tipoImpuesto;
 	}
-	
-	public Impuesto(ImpuestoDto impuestoDto, int id) {
-		this.id = id;
-		this.nombre = impuestoDto.getNombre();
-		this.porcentaje = impuestoDto.getPorcentaje();
-		this.tipoImpuesto = impuestoDto.getTipoImpuesto();
+
+	public ImpuestoDto(Impuesto impuesto) {
+		this.id = impuesto.getId();
+		this.nombre = impuesto.getNombre();
+		this.porcentaje = impuesto.getPorcentaje();
+		this.tipoImpuesto = impuesto.getTipoImpuesto();
 	}
 	
 	public int getId() {

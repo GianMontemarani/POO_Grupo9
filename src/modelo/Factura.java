@@ -1,6 +1,9 @@
 package modelo;
 
 import java.util.List;
+
+import dto.FacturaDto;
+
 import java.util.Date;
 
 public class Factura extends Documento {
@@ -21,6 +24,16 @@ public class Factura extends Documento {
 		this.ordenDePago = ordenDePago;
 		this.totalARetener = totalARetener;
 		this.items = items;
+	}
+	
+	public Factura(FacturaDto facturaDto, int numero) {
+		super(numero, facturaDto.getImporte(), facturaDto.getFecha(), facturaDto.getProveedor());
+		this.ordenCompra = facturaDto.getOrdenCompra();
+		this.productos = facturaDto.getProductos();
+		this.impuestos = facturaDto.getImpuestos();
+		this.ordenDePago = facturaDto.getOrdenDePago();
+		this.totalARetener = facturaDto.getTotalARetener();
+		this.items = facturaDto.getItems();
 	}
 
 	public OrdenDeCompra getOrdenCompra() {

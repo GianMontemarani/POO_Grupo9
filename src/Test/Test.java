@@ -1,11 +1,21 @@
 package Test;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
+import controladores.DocumentoController;
+import controladores.ImpuestoController;
 import controladores.ProductoController;
 import controladores.ProveedorController;
+import dto.FacturaDto;
+import dto.ImpuestoDto;
 import dto.ProductoDto;
 import dto.ProveedorDto;
+import modelo.Documento;
+import modelo.Factura;
+import modelo.OrdenDeCompra;
+import modelo.TipoImpuesto;
 
 public class Test {
 	private static Scanner scanner = new Scanner(System.in);
@@ -40,6 +50,13 @@ public class Test {
 	public static void main(String[] args) throws Exception {
 			ProveedorController proveedorController = ProveedorController.getInstance();
 			ProductoController productoController = ProductoController.getInstance();
+			ImpuestoController impuestoController = ImpuestoController.getInstance();
+			DocumentoController documentController = DocumentoController.getInstance();
+			
+			ImpuestoDto imp1 = new ImpuestoDto("iva21", 21.0f, TipoImpuesto.IVA);
+			ImpuestoDto imp2 = new ImpuestoDto("Ganancias35", 35.0f, TipoImpuesto.GANANCIAS);
+			impuestoController.addImpuesto(imp1);
+			impuestoController.addImpuesto(imp2);
 			
 			int opcion;
 	        do {

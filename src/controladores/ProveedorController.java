@@ -15,7 +15,7 @@ public class ProveedorController {
 		
 		private static ProveedorDao proveedorDao;
 		
-		private ProveedorController(List<Proveedor> modelList) {proveedoresList = modelList;}
+		private ProveedorController(List<Proveedor> proveedoresList) {ProveedorController.proveedoresList = proveedoresList;}
 		
 		public static synchronized ProveedorController getInstance() throws Exception{
 			if(INSTANCE == null) {

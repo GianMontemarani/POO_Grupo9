@@ -1,8 +1,8 @@
-package modelo;
+package dto;
 
-import dto.UsuarioDto;
+import modelo.Usuario;
 
-public class Usuario {
+public class UsuarioDto {
 	private int usuarioId;
 	private String user;
 	private String password;
@@ -10,22 +10,26 @@ public class Usuario {
 	private String apellido;
 	private String rol;
 	
-	public Usuario(int usuarioId, String user, String password, String nombre, String apellido, String rol) {
-		this.usuarioId = usuarioId;
+	public UsuarioDto(String user, String password) {
+		this.user = user;
+		this.password = password;
+	}
+	
+	public UsuarioDto(String user, String password, String nombre, String apellido, String rol) {
 		this.user = user;
 		this.password = password;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.rol = rol;
 	}
-	
-	public Usuario(UsuarioDto usuarioDto, int id) {
-		this.usuarioId = usuarioDto.getUsuarioId();
-		this.user = usuarioDto.getUser();
-		this.password = usuarioDto.getPassword();
-		this.nombre = usuarioDto.getNombre();
-		this.apellido = usuarioDto.getApellido();
-		this.rol = usuarioDto.getRol();
+
+	public UsuarioDto(Usuario usuario) {
+		this.usuarioId = usuario.getUsuarioId();
+		this.user = usuario.getUser();
+		this.password = usuario.getPassword();
+		this.nombre = usuario.getNombre();
+		this.apellido = usuario.getApellido();
+		this.rol = usuario.getRol();
 	}
 	
 	public int getUsuarioId() {
