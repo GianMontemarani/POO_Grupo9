@@ -12,7 +12,7 @@ public class MenuApp {
 		ProveedorView proveedorScreen = new ProveedorView(panel);
 		menu.add(proveedorScreen.getListar());
 		menu.add(proveedorScreen.getAgregar());
-		menu.add(proveedorScreen.getQuitar());
+		
 
 		return menu;
 	}

@@ -55,6 +55,21 @@ public class ProveedorController {
 			}
 		}
 		
+		public void eliminarByCuit(int cuit) {
+            try {
+                for(Proveedor p: proveedoresList) {
+                    if(p.getCuit() == cuit) {
+                        proveedoresList.remove(p);
+                        proveedorDao.saveAll(proveedoresList);
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {
 			return new Proveedor(proveedorDto);
 		}
