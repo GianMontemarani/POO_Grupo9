@@ -355,7 +355,6 @@ public class ProveedorView {
 	static class ButtonEditor extends DefaultCellEditor {
 		private BotonEliminar button;
 		
-		
 		public ButtonEditor(JTextField textField, BotonEliminar button, JTable table, Object[][] datos, ProveedorController proveedorController,ProveedorView view) {
 			super(textField);
 			this.button = button;
