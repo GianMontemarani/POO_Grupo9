@@ -2,3 +2,4 @@
 {"id":2,"nombre":"Ganancias35","porcentaje":35.0,"tipoImpuesto":"GANANCIAS"}
 {"id":3,"nombre":"iva21","porcentaje":21.0,"tipoImpuesto":"IVA"}
 {"id":4,"nombre":"Ganancias35","porcentaje":35.0,"tipoImpuesto":"GANANCIAS"}
+{"id":5,"nombre":"IIBB25","porcentaje":25.0,"tipoImpuesto":"IIBB"}

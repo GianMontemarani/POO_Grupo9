@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.Date;
 
+import dto.ChequeDto;
+
 public class Cheque extends Documento{
 	private Boolean propio;
 	private Date fechaVencimiento;
@@ -13,6 +15,13 @@ public class Cheque extends Documento{
 		this.propio = propio;
 		this.fechaVencimiento = fechaVencimiento;
 		this.firmante = firmante;
+	}
+
+	public Cheque(ChequeDto chequeDto, int id) {
+		super(id, chequeDto.getImporte(), chequeDto.getFecha(), chequeDto.getProveedor());
+		this.propio = chequeDto.getTipoPropio();
+		this.fechaVencimiento = chequeDto.getFecha();
+		this.firmante = chequeDto.getFirmante();
 	}
 
 	public Boolean getPropio() {
@@ -37,5 +46,13 @@ public class Cheque extends Documento{
 
 	public void setString(String firmante) {
 		this.firmante = firmante;
-	}	
+	}
+
+	public String getFirmante() {
+		return firmante;
+	}
+
+	public void setFirmante(String firmante) {
+		this.firmante = firmante;
+	}
 }

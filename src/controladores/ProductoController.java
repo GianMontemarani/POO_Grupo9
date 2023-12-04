@@ -7,7 +7,6 @@ import java.util.List;
 import dao.ProductoDao;
 import dto.ProductoDto;
 import modelo.Producto;
-import modelo.Proveedor;
 
 public class ProductoController {
 	private static ProductoController INSTANCE = null;

@@ -3,6 +3,7 @@ package controladores;
 import java.io.File;
 import java.util.List;
 
+import dao.UsuarioDao;
 import dto.UsuarioDto;
 import modelo.Usuario;
 

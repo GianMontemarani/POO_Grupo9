@@ -1,55 +1,51 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import controladores.ImpuestoController;
 import controladores.ProductoController;
-import controladores.ProveedorController;
+import dto.ImpuestoDto;
 import dto.ProductoDto;
-import dto.ProveedorDto;
-import modelo.Rubro;
-import ui.ProveedorView.ButtonEditor;
+import modelo.TipoImpuesto;
+import ui.ProductoView.ButtonEditor;
 
-public class ProductoView {
-
-	private JMenuItem agregarProducto;
-	private JMenuItem listarProducto;
+public class ImpuestosView {
+	private JMenuItem agregarImpuesto;
+	private JMenuItem listarImpuesto;
 	private JPanel panel;
 
-	public ProductoView(JPanel panel) {
+	public ImpuestosView(JPanel panel) {
 		this.panel = panel;
-		ProductoController productoController;
+		ImpuestoController impuestoController;
 
 		try {
-			productoController = ProductoController.getInstance();
+			impuestoController = ImpuestoController.getInstance();
 
-			listarProducto = new JMenuItem("Listar");
-			listarProducto.addActionListener(e -> {
-				listar(productoController);
+			listarImpuesto = new JMenuItem("Listar");
+			listarImpuesto.addActionListener(e -> {
+				 listar(impuestoController); 
 			});
 
-			agregarProducto = new JMenuItem("Agregar");
-			agregarProducto.addActionListener(e -> {
-				agregar(productoController);
+			agregarImpuesto = new JMenuItem("Agregar");
+			agregarImpuesto.addActionListener(e -> {
+				agregar(impuestoController);
 			});
 
 		} catch (Exception e) {
@@ -58,7 +54,7 @@ public class ProductoView {
 
 	}
 
-	private void agregar(ProductoController productoController) {
+	private void agregar(ImpuestoController impuestoController) {
 		/* Configuro la pantalla de agregar */
 
 		panel.removeAll();
@@ -75,53 +71,53 @@ public class ProductoView {
 		nombreTexto.setBounds(100, 20, 165, 25);
 		panel.add(nombreTexto);
 
-		/* Unidad */
-		JLabel unidad = new JLabel("Unidad");
+		/* Tipo */
+		JLabel tipo = new JLabel("Tipo");
 		/* (x, y, largo, ancho) */
-		unidad.setBounds(10, 50, 80, 25);
-		panel.add(unidad);
+		tipo.setBounds(10, 50, 80, 25);
+		panel.add(tipo);
 
-		JTextField unidadText = new JTextField(20);
-		/* (x, y, largo, ancho) */
-		unidadText.setBounds(100, 50, 165, 25);
-		panel.add(unidadText);
+		String[] options = { "IVA", "IIBB", "GANANCIAS" };
+		JComboBox<String> comboBox = new JComboBox<>(options);
+		panel.add(comboBox);
+		comboBox.setBounds(100, 50, 165, 25);
 
-		/* Precio */
-		JLabel precio = new JLabel("Precio");
+		/* porcentaje */
+		JLabel porcentaje = new JLabel("Porcentaje");
 		/* (x, y, largo, ancho) */
-		precio.setBounds(10, 80, 80, 25);
-		panel.add(precio);
+		porcentaje.setBounds(10, 80, 80, 25);
+		panel.add(porcentaje);
 
-		JTextField precioTexto = new JTextField(20);
+		JTextField porcentajeTexto = new JTextField(20);
 		/* (x, y, largo, ancho) */
-		precioTexto.setBounds(100, 80, 165, 25);
-		panel.add(precioTexto);
-
-		/* IVA */
-		JLabel iva = new JLabel("IVA");
-		/* (x, y, largo, ancho) */
-		iva.setBounds(10, 110, 80, 25);
-		panel.add(iva);
-
-		JTextField ivaTexto = new JTextField(20);
-		/* (x, y, largo, ancho) */
-		ivaTexto.setBounds(100, 110, 165, 25);
-		panel.add(ivaTexto);
+		porcentajeTexto.setBounds(100, 80, 165, 25);
+		panel.add(porcentajeTexto);
 
 		/* Boton Agregar */
 		JButton botonAgregar = new JButton("Agregar");
 		/* (x, y, largo, ancho) */
-		botonAgregar.setBounds(100, 150, 120, 25);
+		botonAgregar.setBounds(100, 110, 120, 25);
 		panel.add(botonAgregar);
 
 		botonAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String selectedOption = (String) comboBox.getSelectedItem();
+				TipoImpuesto tipo = null;
+				if (selectedOption.equals("IVA")) {
+					tipo = TipoImpuesto.IVA;
+				} else if (selectedOption.equals("IIBB")) {
+					tipo = TipoImpuesto.IIBB;
+				} else {
+					tipo = TipoImpuesto.GANANCIAS;
+				}
+				System.out.println(selectedOption);
 
-				ProductoDto pDto = new ProductoDto(unidadText.getText(), Float.parseFloat(precioTexto.getText()),
-						Integer.parseInt(ivaTexto.getText()), nombreTexto.getText());
+				ImpuestoDto iDto = new ImpuestoDto(nombreTexto.getText(), Float.parseFloat(porcentajeTexto.getText()),
+						tipo);
 
-				productoController.addProducto(pDto);
+				impuestoController.addImpuesto(iDto);
+
 			}
 		});
 
@@ -131,24 +127,23 @@ public class ProductoView {
 
 	}
 
-	private void listar(ProductoController productoController) {
+	private void listar(ImpuestoController impuestoController) {
 		// Configuro la pantalla de listar
 		panel.removeAll();
 		panel.setLayout(new BorderLayout());
 
 		// Conseguimos la lista de proveedores
-		List<ProductoDto> listaProductos = productoController.getAll();
-		Object[][] datos = new Object[listaProductos.size()][7];
-		for (int i = 0; i < listaProductos.size(); i++) {
-			ProductoDto productos = listaProductos.get(i);
-			datos[i][0] = productos.getId();
-			datos[i][1] = productos.getNombre();
-			datos[i][2] = productos.getUnidad();
-			datos[i][3] = productos.getIva();
-			datos[i][4] = productos.getPrecio();
+		List<ImpuestoDto> listaImpuestos = impuestoController.getAll();
+		Object[][] datos = new Object[listaImpuestos.size()][7];
+		for (int i = 0; i < listaImpuestos.size(); i++) {
+			ImpuestoDto impuesto = listaImpuestos.get(i);
+			datos[i][0] = impuesto.getId();
+			datos[i][1] = impuesto.getNombre();
+			datos[i][2] = impuesto.getPorcentaje();
+			datos[i][3] = impuesto.getTipoImpuesto();
 		}
 		// Creamos el array de columnas
-		String[] nombresColumnas = { "ID", "Nombre", "Unidad", "IVA", "Precio", "Eliminar" };
+		String[] nombresColumnas = { "ID", "Nombre", "Porcentaje", "Tipo", "Eliminar" };
 		// Creamos la tabla a partir de los datos y las columnas
 		DefaultTableModel modeloTabla = new DefaultTableModel(datos, nombresColumnas);
 
@@ -157,16 +152,16 @@ public class ProductoView {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
-				return column == 5;
+				return column == 4;
 			};
 		};
 
 		// Boton de eliminar
 		BotonEliminar botonEliminar = new BotonEliminar();
-		TableColumn columnaBoton = tabla.getColumnModel().getColumn(5);
+		TableColumn columnaBoton = tabla.getColumnModel().getColumn(4);
 		columnaBoton.setCellRenderer(botonEliminar);
 		columnaBoton.setCellEditor(
-				new ButtonEditor(new JTextField(), botonEliminar, tabla, datos, productoController, this));
+				new ButtonEditor(new JTextField(), botonEliminar, tabla, datos, impuestoController, this));
 
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		panel.add(scrollPane, BorderLayout.CENTER);
@@ -175,12 +170,13 @@ public class ProductoView {
 		panel.revalidate();
 		panel.repaint();
 	}
-
+	
+	
 	static class ButtonEditor extends DefaultCellEditor {
 		private BotonEliminar button;
 
 		public ButtonEditor(JTextField textField, BotonEliminar button, JTable table, Object[][] datos,
-				ProductoController productoController, ProductoView view) {
+				ImpuestoController impuestoController, ImpuestosView view) {
 			super(textField);
 			this.button = button;
 
@@ -191,9 +187,9 @@ public class ProductoView {
 				int selectedRow = table.getSelectedRow();
 
 				int id = (int) datos[selectedRow][0];
-				productoController.eliminarById(id);
-				System.out.println("Elimina el producto");
-				view.listar(productoController);
+				/* impuestoController.eliminarById(id); */
+				System.out.println("Elimina el Impuesto: "+id);
+				view.listar(impuestoController);
 			});
 		}
 
@@ -206,10 +202,10 @@ public class ProductoView {
 	}
 
 	public JMenuItem getAgregar() {
-		return agregarProducto;
+		return agregarImpuesto;
 	}
 
 	public JMenuItem getListar() {
-		return listarProducto;
+		return listarImpuesto;
 	}
 }

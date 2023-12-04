@@ -1,4 +1,4 @@
-package controladores;
+package dao;
 
 import modelo.Usuario;
 import util.GenericDAO;

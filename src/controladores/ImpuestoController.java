@@ -25,7 +25,7 @@ public class ImpuestoController {
 		return INSTANCE;
 	}
 	
-	public List<ImpuestoDto> getAll() throws Exception {
+	public List<ImpuestoDto> getAll(){
         List<ImpuestoDto> dtoList = new ArrayList<>();
         for (Impuesto impuesto : impuestosList) {
             dtoList.add(toDto(impuesto));
@@ -33,7 +33,7 @@ public class ImpuestoController {
         return dtoList;
     }
 	
-	public ImpuestoDto getById(int id) throws Exception {
+	public ImpuestoDto getById(int id){
         for (Impuesto impuesto: impuestosList) {
             if (impuesto.getId() == id){
                 return toDto(impuesto);

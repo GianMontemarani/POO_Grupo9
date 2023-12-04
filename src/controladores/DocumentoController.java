@@ -10,15 +10,19 @@ import dao.FacturaDao;
 import dao.NotaDeCreditoDao;
 import dao.NotaDeDebitoDao;
 import dao.OrdenDeCompraDao;
+import dto.ChequeDto;
 import dto.FacturaDto;
+import dto.ImpuestoRetenidoDto;
+import dto.LibroIvaDto;
 import dto.NotaDto;
+import dto.OrdenDeCompraDto;
 import dto.OrdenesDePagoDto;
 import modelo.Cheque;
 import modelo.Factura;
+import modelo.ItemDeFactura;
 import modelo.NotaDeCredito;
 import modelo.NotaDeDebito;
 import modelo.OrdenDeCompra;
-import modelo.OrdenDePago;
 
 public class DocumentoController {
 	private static DocumentoController INSTANCE = null;
@@ -60,22 +64,12 @@ public class DocumentoController {
 		return INSTANCE;
 	}
 	
-	public List<FacturaDto> getFacturas() throws Exception{
+	public List<FacturaDto> getFacturas(){
 		List<FacturaDto> dtoList = new ArrayList<>();
         for (Factura factura : facturas) {
             dtoList.add(toDto(factura));
         }
         return dtoList;
-	}
-	
-	public void addFactura(FacturaDto facturaDto) {
-		try {
-			Factura facturaNueva = new Factura(facturaDto, facturas.size()+1);
-			facturas.add(facturaNueva);
-			facturaDao.save(facturaNueva);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public List<FacturaDto> getFacturasByFilter(Date fecha) {
@@ -108,7 +102,7 @@ public class DocumentoController {
         return dtoList;
 	}
 	
-	public List<NotaDto> geNotasDeCredito() throws Exception{
+	public List<NotaDto> getNotasDeCredito(){
 		List<NotaDto> dtoList = new ArrayList<>();
         for (NotaDeCredito notaDeCredito : notasDeCredito) {
             dtoList.add(toDto(notaDeCredito));
@@ -116,12 +110,46 @@ public class DocumentoController {
         return dtoList;
 	}
 	
-	public List<NotaDto> geNotasDeDebito() throws Exception{
+	public List<NotaDto> getNotasDeDebito(){
 		List<NotaDto> dtoList = new ArrayList<>();
         for (NotaDeDebito notaDeDebito : notasDeDebito) {
             dtoList.add(toDto(notaDeDebito));
         }
         return dtoList;
+	}
+	
+	public List<OrdenDeCompraDto> getOrdenesDeComrpra(){
+		List<OrdenDeCompraDto> dtoList = new ArrayList<>();
+        for (OrdenDeCompra ordenDeCompra : ordenesDeCompra) {
+            dtoList.add(toDto(ordenDeCompra));
+        }
+        return dtoList;
+	}
+	
+	public List<ChequeDto> getCheques(){
+		List<ChequeDto> dtoList = new ArrayList<>();
+        for (Cheque cheque : cheques) {
+            dtoList.add(toDto(cheque));
+        }
+        return dtoList;
+	}
+	
+	public List<ImpuestoRetenidoDto> getImpuestosRetenidos(){
+		List<ImpuestoRetenidoDto> impuestosRetenidos = new ArrayList<ImpuestoRetenidoDto>();
+		for(Factura f: facturas) {
+			impuestosRetenidos.add(new ImpuestoRetenidoDto(f.getNumero(), f.getTotalARetener(), f.getImpuestos()));
+		}
+		return impuestosRetenidos;
+	}
+	
+	public List<LibroIvaDto> getLibroIva(){
+		List<LibroIvaDto> libroIva = new ArrayList<LibroIvaDto>();
+		for(Factura f: facturas) {
+			for(ItemDeFactura item: f.getProductos()) {
+				libroIva.add(new LibroIvaDto(f.getProveedor().getCuit(), f.getProveedor().getNombre(), f.getFecha(), item.getImpuesto().getPorcentaje(), (item.getImpuesto().getPorcentaje()*item.getImporte())/100 ));
+			}
+		}
+		return libroIva;
 	}
 	
 	public List<OrdenesDePagoDto> getOrdenesDePago(){
@@ -130,6 +158,16 @@ public class DocumentoController {
             dtoList.add(new OrdenesDePagoDto(f.getNumero(), f.getOrdenDePago())); 
         }
         return dtoList;
+	}
+	
+	public void addFactura(FacturaDto facturaDto) {
+		try {
+			Factura facturaNueva = new Factura(facturaDto, facturas.size()+1);
+			facturas.add(facturaNueva);
+			facturaDao.save(facturaNueva);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void addNotaCredito(NotaDto notaDto) {
@@ -152,6 +190,100 @@ public class DocumentoController {
 		}
 	}
 	
+	public void addOrdenDeCompra(OrdenDeCompraDto ordenDeCompraDto) {
+		try {
+			OrdenDeCompra ordenDeCompra = new OrdenDeCompra(ordenDeCompraDto, ordenesDeCompra.size()+1);
+			ordenesDeCompra.add(ordenDeCompra);
+			ordenDeCompraDao.save(ordenDeCompra);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addCheque(ChequeDto chequeDto) {
+		try {
+			Cheque cheque = new Cheque(chequeDto, cheques.size()+1);
+			cheques.add(cheque);
+			chequeDao.save(cheque);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarFacturaById(int id) {
+        try {
+            for(Factura f: facturas) {
+                if(f.getNumero() == id) {
+                	facturas.remove(f);
+                    facturaDao.saveAll(facturas);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
+    }
+
+	public void elimiarNotasDeCreditoById(int id) {
+		try {
+			for(NotaDeCredito n: notasDeCredito) {
+				if(n.getNumero() == id) {
+					notasDeCredito.remove(n);
+					notaDeCreditoDao.saveAll(notasDeCredito);
+					return;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	public void elimiarNotasDeDebitoById(int id) {
+		try {
+			for(NotaDeDebito n: notasDeDebito) {
+				if(n.getNumero() == id) {
+					notasDeDebito.remove(n);
+					notaDeDebitoDao.saveAll(notasDeDebito);
+					return;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	public void eliminarOrdenDeCompraById(int id) {
+		try {
+			for(OrdenDeCompra o: ordenesDeCompra) {
+				if(o.getNumero() == id) {
+					ordenesDeCompra.remove(o);
+					ordenDeCompraDao.saveAll(ordenesDeCompra);
+					return;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	public void eliminarChequeById(int id) {
+		try {
+			for(Cheque c: cheques) {
+				if(c.getNumero() == id) {
+					cheques.remove(c);
+					chequeDao.saveAll(cheques);
+					return;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
+	}
 	
 	private static String getPathOutModel(String name){
         String dir = "./datos/";
@@ -168,6 +300,14 @@ public class DocumentoController {
 	
 	public static NotaDto toDto(NotaDeCredito notaDeCredito){
         return new NotaDto(notaDeCredito);
+    }
+	
+	public static OrdenDeCompraDto toDto(OrdenDeCompra ordenDeCompra){
+        return new OrdenDeCompraDto(ordenDeCompra);
+    }
+	
+	public static ChequeDto toDto(Cheque cheque){
+        return new ChequeDto(cheque);
     }
 	
 	private static List<Factura> initFacturas(){

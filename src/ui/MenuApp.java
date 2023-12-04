@@ -42,5 +42,15 @@ public class MenuApp {
 
 		return menu;
 	}
+	
+	public JMenu menuImpuestos(JPanel panel) {
+		menu = new JMenu("Impuestos");
+
+		ImpuestosView impuestosView = new ImpuestosView(panel);
+		menu.add(impuestosView.getAgregar());
+		menu.add(impuestosView.getListar());
+
+		return menu;
+	}
 
 }

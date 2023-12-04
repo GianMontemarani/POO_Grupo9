@@ -17,6 +17,13 @@ public class ProductoDto {
 		this.nombre = nombre;
 	}
 	
+	public ProductoDto(String unidad, float precio, int iva, String nombre) {
+		this.unidad = unidad;
+		this.precio = precio;
+		this.iva = iva;
+		this.nombre = nombre;
+	}
+	
 	public ProductoDto(Producto producto) {
 		this.id = producto.getId();
 		this.unidad = producto.getUnidad();

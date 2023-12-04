@@ -5,8 +5,9 @@ import java.util.List;
 
 
 import dao.ProveedorDao;
+import dto.CuentaCorrienteProveedorDto;
+import dto.PreciosProveedorDto;
 import dto.ProveedorDto;
-import modelo.Documento;
 import modelo.Factura;
 import modelo.OrdenDePago;
 import modelo.Proveedor;
@@ -86,6 +87,36 @@ public class ProveedorController {
 				}
 			}
 			return deudaTotal;
+		}
+		
+		public CuentaCorrienteProveedorDto getCuentaCorrientePorProveedor(int cuit) {
+			for(Proveedor p: proveedoresList) {
+				if(p.getCuit() == cuit) {
+					CuentaCorrienteProveedorDto cuentaCorriente = new CuentaCorrienteProveedorDto(cuit);
+					for(Factura f: p.getFacturas()) {
+						float pago = 0;
+						for(OrdenDePago op: f.getOrdenDePago()) {
+							pago += op.getImporte();
+						}
+						if(pago < f.getImporte()) {
+							cuentaCorriente.sumDeuda(f.getImporte() - pago);
+							cuentaCorriente.addDocumentoImpago(f);
+						}
+					}
+					return cuentaCorriente;
+				}
+			}
+			return null;
+		}
+		
+		public List<PreciosProveedorDto> getPrecioPorProducto(int id) {
+			List<PreciosProveedorDto> preciosPorProveedor = new ArrayList<PreciosProveedorDto>();
+			for(Proveedor p: proveedoresList) {
+				if(p.tieneProducto(id)) {
+					preciosPorProveedor.add(new PreciosProveedorDto(p.getCuit(), p.getRazonSocial(), p.getPrecioProducto(id)));
+				}
+			}
+			return preciosPorProveedor;
 		}
 		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {

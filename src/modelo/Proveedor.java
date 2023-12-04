@@ -168,6 +168,15 @@ public class Proveedor {
 		return false;
 	}
 	
+	public float getPrecioProducto(int id) {
+		for(Producto p: this.productos) {
+			if(p.getId() == id) {
+				return p.getPrecio();
+			}
+		}
+		return 0;
+	}
+	
 	public List<Factura> getFacturas(){
 		List<Factura> facturas = new ArrayList<Factura>();
 		for(Documento d: this.documentos) {
