@@ -18,11 +18,26 @@ public class MenuApp {
 	}
 	
 	public JMenu menuProducto(JPanel panel) {
-		menu = new JMenu("Producto");
+		menu = new JMenu("Productos");
 
 		ProductoView productoScreen = new ProductoView(panel);
 		menu.add(productoScreen.getAgregar());
 		menu.add(productoScreen.getQuitar());
+
+		return menu;
+	}
+	
+	public JMenu menuFunctions(JPanel panel) {
+		menu = new JMenu("Funciones");
+
+		FunctionsView functionsView = new FunctionsView(panel);
+		menu.add(functionsView.FacturasPorDiaProveedor());
+		menu.add(functionsView.precioPorProducto());
+		menu.add(functionsView.ObtenerOrdenesDePago());
+		menu.add(functionsView.DeudaPorProveedor());
+		menu.add(functionsView.ImpuestosRetenidos());
+		menu.add(functionsView.LibroIVA());
+		menu.add(functionsView.CuentaCorrienteDeProveedores());
 
 		return menu;
 	}

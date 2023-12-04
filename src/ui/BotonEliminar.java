@@ -9,22 +9,28 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-public class BotonEliminar{
-	private JButton button;
-
+public class BotonEliminar extends JButton implements TableCellRenderer, ActionListener {
 	public BotonEliminar() {
-		button = new JButton("Click me");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Perform your action here when the button is clicked
-				System.out.println("Button clicked!");
-			}
-		});
+		// Initialize your button properties if needed
+		// For example, setOpaque(true) to make sure it's painted
+		setOpaque(true);
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		return button;
+		// Customize the button based on the cell value or other parameters
+		setText("Eliminar"); // Set the button text
+		// Add any other customization based on the cell value or other parameters
+
+		return this; // Return the button as the rendering component
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// This method will be called when the button is clicked
+		// Perform your action here
+		System.out.println("Button clicked!");
+		// Add your custom action code here
 	}
 }

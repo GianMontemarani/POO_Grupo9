@@ -19,14 +19,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableCellRenderer;
+
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
@@ -38,7 +37,7 @@ public class ProveedorView {
 
 	private JMenuItem listarProveedores;
 	private JMenuItem agregarProveedor;
-	private JMenuItem quitarProveedor;
+
 	private JPanel panel;
 
 	public ProveedorView(JPanel panel) {
@@ -99,7 +98,8 @@ public class ProveedorView {
 		BotonEliminar botonEliminar = new BotonEliminar();
 		TableColumn columnaBoton = tabla.getColumnModel().getColumn(7);
 		columnaBoton.setCellRenderer(botonEliminar);
-		columnaBoton.setCellEditor(new ButtonEditor(new JTextField(), botonEliminar, tabla, datos, proveedorController, this));
+		columnaBoton.setCellEditor(
+				new ButtonEditor(new JTextField(), botonEliminar, tabla, datos, proveedorController, this));
 
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		panel.add(scrollPane, BorderLayout.CENTER);
@@ -326,45 +326,20 @@ public class ProveedorView {
 		}
 	}
 
-	public class BotonEliminar extends JButton implements TableCellRenderer, ActionListener {
-		public BotonEliminar() {
-			// Initialize your button properties if needed
-			// For example, setOpaque(true) to make sure it's painted
-			setOpaque(true);
-		}
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			// Customize the button based on the cell value or other parameters
-			setText("Click me"); // Set the button text
-			// Add any other customization based on the cell value or other parameters
-
-			return this; // Return the button as the rendering component
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// This method will be called when the button is clicked
-			// Perform your action here
-			System.out.println("Button clicked!");
-			// Add your custom action code here
-		}
-	}
-
 	static class ButtonEditor extends DefaultCellEditor {
 		private BotonEliminar button;
-		
-		public ButtonEditor(JTextField textField, BotonEliminar button, JTable table, Object[][] datos, ProveedorController proveedorController,ProveedorView view) {
+
+		public ButtonEditor(JTextField textField, BotonEliminar button, JTable table, Object[][] datos,
+				ProveedorController proveedorController, ProveedorView view) {
 			super(textField);
 			this.button = button;
-			
+
 			// @gian aca esta lo que pasa al clickear el boton xd
 			button.addActionListener(e -> {
-				
+
 				fireEditingStopped();
 				int selectedRow = table.getSelectedRow();
-				
+
 				System.out.println("cuit es: " + datos[selectedRow][0]);
 				int cuit = (int) datos[selectedRow][0];
 				proveedorController.eliminarByCuit(cuit);
@@ -375,7 +350,7 @@ public class ProveedorView {
 		@Override
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
 				int column) {
-			button.setText("Click me");
+			button.setText("Eliminado");
 			return button;
 		}
 	}

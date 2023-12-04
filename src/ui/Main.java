@@ -80,6 +80,7 @@ public class Main {
 						/* Menu bars */
 						menuBar.add(menu.menuProveedor(panel));
 						menuBar.add(menu.menuProducto(panel));
+						menuBar.add(menu.menuFunctions(panel));
 						
 						pView.listar(pController);
 						
