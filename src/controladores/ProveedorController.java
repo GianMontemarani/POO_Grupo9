@@ -8,6 +8,7 @@ import dao.ProveedorDao;
 import dto.ProveedorDto;
 import modelo.Documento;
 import modelo.Factura;
+import modelo.OrdenDePago;
 import modelo.Proveedor;
 
 public class ProveedorController {
@@ -73,14 +74,18 @@ public class ProveedorController {
         }
 		
 		public float getDeudaXProveedor(int cuit) {
+			float deudaTotal = 0;
 			for(Proveedor p: proveedoresList) {
 				if(p.getCuit() == cuit) {
-					float deudaTotal = 0f;
-					for(Documento d: p.getFacturas()) {
+					for(Factura f: p.getFacturas()) {
+						deudaTotal += f.getImporte();
+						for(OrdenDePago op: f.getOrdenDePago()) {
+							deudaTotal -= op.getImporte();
+						}
 					}
 				}
 			}
-			return 0;
+			return deudaTotal;
 		}
 		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {

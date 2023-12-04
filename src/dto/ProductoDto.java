@@ -7,8 +7,10 @@ public class ProductoDto {
 	private float precio;
 	private int iva;
 	private String nombre;
+	private int id;
 	
-	public ProductoDto(String unidad, float precio, int iva, String nombre) {
+	public ProductoDto(int id,String unidad, float precio, int iva, String nombre) {
+		this.id = id;
 		this.unidad = unidad;
 		this.precio = precio;
 		this.iva = iva;
@@ -16,6 +18,7 @@ public class ProductoDto {
 	}
 	
 	public ProductoDto(Producto producto) {
+		this.id = producto.getId();
 		this.unidad = producto.getUnidad();
 		this.precio = producto.getPrecio();
 		this.iva = producto.getIva();
@@ -40,13 +43,17 @@ public class ProductoDto {
 	public void setIva(int iva) {
 		this.iva = iva;
 	}
-	
 	public String getNombre() {
 		return nombre;
 	}
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

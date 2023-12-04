@@ -21,8 +21,9 @@ public class MenuApp {
 		menu = new JMenu("Productos");
 
 		ProductoView productoScreen = new ProductoView(panel);
-		menu.add(productoScreen.getAgregar());
 		menu.add(productoScreen.getListar());
+		menu.add(productoScreen.getAgregar());
+		
 
 		return menu;
 	}

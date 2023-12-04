@@ -2,9 +2,16 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -16,7 +23,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import controladores.ProductoController;
+import controladores.ProveedorController;
 import dto.ProductoDto;
+import dto.ProveedorDto;
+import modelo.Rubro;
+import ui.ProveedorView.ButtonEditor;
 
 public class ProductoView {
 
@@ -30,15 +41,15 @@ public class ProductoView {
 
 		try {
 			productoController = ProductoController.getInstance();
-			
+
 			listarProducto = new JMenuItem("Listar");
 			listarProducto.addActionListener(e -> {
 				listar(productoController);
 			});
 
 			agregarProducto = new JMenuItem("Agregar");
-			listarProducto.addActionListener(e -> {
-				agregar();
+			agregarProducto.addActionListener(e -> {
+				agregar(productoController);
 			});
 
 		} catch (Exception e) {
@@ -47,61 +58,77 @@ public class ProductoView {
 
 	}
 
-	private void agregar() {
+	private void agregar(ProductoController productoController) {
 		/* Configuro la pantalla de agregar */
-		agregarProducto.addActionListener(e -> {
 
-			panel.removeAll();
-			panel.setLayout(null);
+		panel.removeAll();
+		panel.setLayout(null);
 
-			/* Nombre */
-			JLabel usuario = new JLabel("Nombre");
-			/* (x, y, largo, ancho) */
-			usuario.setBounds(10, 20, 80, 25);
-			panel.add(usuario);
+		/* Nombre */
+		JLabel nombre = new JLabel("Nombre");
+		/* (x, y, largo, ancho) */
+		nombre.setBounds(10, 20, 80, 25);
+		panel.add(nombre);
 
-			JTextField usuarioTexto = new JTextField(20);
-			/* (x, y, largo, ancho) */
-			usuarioTexto.setBounds(100, 20, 165, 25);
-			panel.add(usuarioTexto);
+		JTextField nombreTexto = new JTextField(20);
+		/* (x, y, largo, ancho) */
+		nombreTexto.setBounds(100, 20, 165, 25);
+		panel.add(nombreTexto);
 
-			/* Unidad */
-			JLabel password = new JLabel("Unidad");
-			/* (x, y, largo, ancho) */
-			password.setBounds(10, 50, 80, 25);
-			panel.add(password);
+		/* Unidad */
+		JLabel unidad = new JLabel("Unidad");
+		/* (x, y, largo, ancho) */
+		unidad.setBounds(10, 50, 80, 25);
+		panel.add(unidad);
 
-			JPasswordField passwordText = new JPasswordField(20);
-			/* (x, y, largo, ancho) */
-			passwordText.setBounds(100, 50, 165, 25);
-			panel.add(passwordText);
+		JTextField unidadText = new JTextField(20);
+		/* (x, y, largo, ancho) */
+		unidadText.setBounds(100, 50, 165, 25);
+		panel.add(unidadText);
 
-			/* Precio */
-			JLabel nombre = new JLabel("Precio");
-			/* (x, y, largo, ancho) */
-			nombre.setBounds(10, 80, 80, 25);
-			panel.add(nombre);
+		/* Precio */
+		JLabel precio = new JLabel("Precio");
+		/* (x, y, largo, ancho) */
+		precio.setBounds(10, 80, 80, 25);
+		panel.add(precio);
 
-			JTextField nombreTexto = new JTextField(20);
-			/* (x, y, largo, ancho) */
-			nombreTexto.setBounds(100, 80, 165, 25);
-			panel.add(nombreTexto);
+		JTextField precioTexto = new JTextField(20);
+		/* (x, y, largo, ancho) */
+		precioTexto.setBounds(100, 80, 165, 25);
+		panel.add(precioTexto);
 
-			/* IVA */
-			JLabel telefono = new JLabel("IVA");
-			/* (x, y, largo, ancho) */
-			telefono.setBounds(10, 110, 80, 25);
-			panel.add(telefono);
+		/* IVA */
+		JLabel iva = new JLabel("IVA");
+		/* (x, y, largo, ancho) */
+		iva.setBounds(10, 110, 80, 25);
+		panel.add(iva);
 
-			JTextField telefonoTexto = new JTextField(20);
-			/* (x, y, largo, ancho) */
-			telefonoTexto.setBounds(100, 110, 165, 25);
-			panel.add(telefonoTexto);
+		JTextField ivaTexto = new JTextField(20);
+		/* (x, y, largo, ancho) */
+		ivaTexto.setBounds(100, 110, 165, 25);
+		panel.add(ivaTexto);
 
-			/* Actualizo el frame */
-			panel.revalidate();
-			panel.repaint();
+		/* Boton Agregar */
+		JButton botonAgregar = new JButton("Agregar");
+		/* (x, y, largo, ancho) */
+		botonAgregar.setBounds(100, 150, 120, 25);
+		panel.add(botonAgregar);
+
+		botonAgregar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				ProductoDto pDto = new ProductoDto(unidadText.getText(), Integer.parseInt(precioTexto.getText()),
+						Integer.parseInt(ivaTexto.getText()), nombreTexto.getText());
+
+				productoController.addProducto(pDto);
+			}
 		});
+
+		/* Actualizo el frame */
+		panel.revalidate();
+		panel.repaint();
+
 	}
 
 	private void listar(ProductoController productoController) {
@@ -163,7 +190,7 @@ public class ProductoView {
 				int selectedRow = table.getSelectedRow();
 
 				System.out.println("producto es: " + datos[selectedRow][0]);
-				
+
 				// productoController.eliminar();
 				System.out.println("Elimina el producto");
 				view.listar(productoController);

@@ -160,12 +160,7 @@ public class ProveedorView {
 		inicioActividad.setBounds(10, 170, 120, 25);
 		panel.add(inicioActividad);
 		JFormattedTextField dateTextField = createDateTextField();
-		/*
-		 * dateTextField.addFocusListener(new FocusAdapter() {
-		 * 
-		 * @Override public void focusLost(FocusEvent e) { validateDate(dateTextField);
-		 * } });
-		 */
+
 		panel.add(dateTextField);
 
 		/* Rubros */
