@@ -28,6 +28,16 @@ public class MenuApp {
 		return menu;
 	}
 	
+	public JMenu menuImpuestos(JPanel panel) {
+		menu = new JMenu("Impuestos");
+
+		ImpuestosView impuestosView = new ImpuestosView(panel);
+		menu.add(impuestosView.getListar());
+		menu.add(impuestosView.getAgregar());
+
+		return menu;
+	}
+	
 	public JMenu menuFunctions(JPanel panel) {
 		menu = new JMenu("Funciones");
 
@@ -39,16 +49,6 @@ public class MenuApp {
 		menu.add(functionsView.ImpuestosRetenidos());
 		menu.add(functionsView.LibroIVA());
 		menu.add(functionsView.CuentaCorrienteDeProveedores());
-
-		return menu;
-	}
-	
-	public JMenu menuImpuestos(JPanel panel) {
-		menu = new JMenu("Impuestos");
-
-		ImpuestosView impuestosView = new ImpuestosView(panel);
-		menu.add(impuestosView.getAgregar());
-		menu.add(impuestosView.getListar());
 
 		return menu;
 	}
