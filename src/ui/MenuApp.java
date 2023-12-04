@@ -22,7 +22,7 @@ public class MenuApp {
 
 		ProductoView productoScreen = new ProductoView(panel);
 		menu.add(productoScreen.getAgregar());
-		menu.add(productoScreen.getQuitar());
+		menu.add(productoScreen.getListar());
 
 		return menu;
 	}

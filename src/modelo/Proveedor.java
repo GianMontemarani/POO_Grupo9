@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -156,5 +157,24 @@ public class Proveedor {
 
 	public void setDocumentos(List<Documento> documentos) {
 		this.documentos = documentos;
+	}
+	
+	public boolean tieneProducto(int id) {
+		for(Producto p: this.productos) {
+			if(p.getId() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public List<Factura> getFacturas(){
+		List<Factura> facturas = new ArrayList<Factura>();
+		for(Documento d: this.documentos) {
+			if (d instanceof Factura) {
+				facturas.add((Factura) d);
+			}
+		}
+		return facturas;
 	}
 }

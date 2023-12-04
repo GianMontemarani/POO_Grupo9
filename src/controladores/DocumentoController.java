@@ -1,6 +1,7 @@
 package controladores;
 
 import java.io.File;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,13 @@ import dao.NotaDeDebitoDao;
 import dao.OrdenDeCompraDao;
 import dto.FacturaDto;
 import dto.NotaDto;
+import dto.OrdenesDePagoDto;
 import modelo.Cheque;
 import modelo.Factura;
 import modelo.NotaDeCredito;
 import modelo.NotaDeDebito;
 import modelo.OrdenDeCompra;
+import modelo.OrdenDePago;
 
 public class DocumentoController {
 	private static DocumentoController INSTANCE = null;
@@ -75,6 +78,36 @@ public class DocumentoController {
 		}
 	}
 	
+	public List<FacturaDto> getFacturasByFilter(Date fecha) {
+		List<FacturaDto> dtoList = new ArrayList<>();
+        for (Factura factura : facturas) {
+        	if(factura.getFecha().equals(fecha)) {
+        		dtoList.add(toDto(factura));
+        	}
+        }
+        return dtoList;
+	}
+	
+	public List<FacturaDto> getFacturasByFilter(int cuit) {
+		List<FacturaDto> dtoList = new ArrayList<>();
+        for (Factura factura : facturas) {
+        	if(factura.getProveedor().getCuit() == cuit) {
+        		dtoList.add(toDto(factura));
+        	}
+        }
+        return dtoList;
+	}
+	
+	public List<FacturaDto> getFacturasByFilter(Date fecha, int cuit) {
+		List<FacturaDto> dtoList = new ArrayList<>();
+        for (Factura factura : facturas) {
+        	if(factura.getFecha().equals(fecha) && factura.getProveedor().getCuit() == cuit) {
+        		dtoList.add(toDto(factura));
+        	}
+        }
+        return dtoList;
+	}
+	
 	public List<NotaDto> geNotasDeCredito() throws Exception{
 		List<NotaDto> dtoList = new ArrayList<>();
         for (NotaDeCredito notaDeCredito : notasDeCredito) {
@@ -87,6 +120,14 @@ public class DocumentoController {
 		List<NotaDto> dtoList = new ArrayList<>();
         for (NotaDeDebito notaDeDebito : notasDeDebito) {
             dtoList.add(toDto(notaDeDebito));
+        }
+        return dtoList;
+	}
+	
+	public List<OrdenesDePagoDto> getOrdenesDePago(){
+		List<OrdenesDePagoDto> dtoList = new ArrayList<>();
+        for (Factura f: facturas) {
+            dtoList.add(new OrdenesDePagoDto(f.getNumero(), f.getOrdenDePago())); 
         }
         return dtoList;
 	}

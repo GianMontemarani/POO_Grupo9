@@ -7,6 +7,7 @@ import java.util.List;
 import dao.ProductoDao;
 import dto.ProductoDto;
 import modelo.Producto;
+import modelo.Proveedor;
 
 public class ProductoController {
 	private static ProductoController INSTANCE = null;
@@ -25,7 +26,7 @@ public class ProductoController {
 		return INSTANCE;
 	}
 	
-	public List<ProductoDto> getAll() throws Exception {
+	public List<ProductoDto> getAll(){
         List<ProductoDto> dtoList = new ArrayList<>();
         for (Producto Producto : productosList) {
             dtoList.add(toDto(Producto));
@@ -51,6 +52,21 @@ public class ProductoController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void eliminarById(int id) {
+        try {
+            for(Producto p: productosList) {
+                if(p.getId() == id) {
+                	productosList.remove(p);
+                    productosDao.saveAll(productosList);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
+    }
 	
 	public static ProductoDto toDto(Producto producto){
         return new ProductoDto(producto);

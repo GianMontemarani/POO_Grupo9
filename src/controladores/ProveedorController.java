@@ -6,6 +6,8 @@ import java.util.List;
 
 import dao.ProveedorDao;
 import dto.ProveedorDto;
+import modelo.Documento;
+import modelo.Factura;
 import modelo.Proveedor;
 
 public class ProveedorController {
@@ -69,6 +71,17 @@ public class ProveedorController {
             }
             return;
         }
+		
+		public float getDeudaXProveedor(int cuit) {
+			for(Proveedor p: proveedoresList) {
+				if(p.getCuit() == cuit) {
+					float deudaTotal = 0f;
+					for(Documento d: p.getFacturas()) {
+					}
+				}
+			}
+			return 0;
+		}
 		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {
 			return new Proveedor(proveedorDto);
