@@ -23,7 +23,7 @@ public class ProveedorController {
 		
 		private ProveedorController(List<Proveedor> proveedoresList) {ProveedorController.proveedoresList = proveedoresList;}
 		
-		private Proveedor getProveedorModel(int cuit) {
+		public static Proveedor getProveedorModel(int cuit) {
 			try {
 				for(Proveedor p: proveedoresList) {
 					if(p.getCuit() == cuit) {
@@ -188,9 +188,31 @@ public class ProveedorController {
 		private static List<Proveedor> initProvedores(){
 	        try {
 	        	proveedoresList = proveedorDao.getAll();
-			} catch (Exception e) {
+	        	syncProductos();
+	        } catch (Exception e) {
 				e.printStackTrace();
 			}
 	        return  proveedoresList;
-    }
+		}
+		
+		private static void syncProductos() {
+			ProductoController pController;
+			try {
+				pController = ProductoController.getInstance();
+				for(Proveedor p: proveedoresList) {
+	        		List<Producto> productos = p.getProductos();
+	        		List<Producto> productosSync = new ArrayList<Producto>();
+	        		if(productos !=null) {
+	        			if(productos.size() > 0) {
+		        			for(Integer i: p.getProductosId()) {
+		        				productosSync.add(pController.getProductoModel(i));
+		        			}
+		        		}
+	        			p.setProductos(productosSync);
+	        		}
+	        	}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 }
