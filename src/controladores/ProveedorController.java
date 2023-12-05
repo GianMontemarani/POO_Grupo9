@@ -11,6 +11,7 @@ import dto.ProveedorDto;
 import modelo.CertificadoRetencion;
 import modelo.Factura;
 import modelo.OrdenDePago;
+import modelo.Producto;
 import modelo.Proveedor;
 
 public class ProveedorController {
@@ -86,7 +87,6 @@ public class ProveedorController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return;
         }
 		
 		public float getDeudaXProveedor(int cuit) {
@@ -122,7 +122,7 @@ public class ProveedorController {
 		}
 		
 		public List<PreciosProveedorDto> getPrecioPorProducto(int id) {
-			List<PreciosProveedorDto> preciosPorProveedor = new ArrayList<PreciosProveedorDto>();
+			List<PreciosProveedorDto> preciosPorProveedor = new ArrayList<>();
 			for(Proveedor p: proveedoresList) {
 				if(p.tieneProducto(id)) {
 					preciosPorProveedor.add(new PreciosProveedorDto(p.getCuit(), p.getRazonSocial(), p.getPrecioProducto(id)));
@@ -148,6 +148,28 @@ public class ProveedorController {
 				e.printStackTrace();
 			}
 			
+		}
+		
+		public void agregarProducto(int cuit, int id) {
+			try {
+				ProductoController productoController = ProductoController.getInstance();
+				Producto p = productoController.getProductoModel(id);
+				this.getProveedorModel(cuit).addProducto(p);
+				proveedorDao.saveAll(proveedoresList);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public void eliminarProducto(int cuit, int id) {
+			try {
+				ProductoController productoController = ProductoController.getInstance();
+				Producto p = productoController.getProductoModel(id);
+				this.getProveedorModel(cuit).deleteProducto(p);
+				proveedorDao.saveAll(proveedoresList);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {

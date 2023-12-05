@@ -39,11 +39,10 @@ public class Proveedor {
 	}
 	
 	public Proveedor(ProveedorDto proveedorDto) {
-		Direccion direccion = new Direccion(proveedorDto.getCalle(), proveedorDto.getAltura(), proveedorDto.getCodigoPostal(), proveedorDto.getPais(), proveedorDto.getProvincia(), proveedorDto.getCiudad());
 		this.cuit = proveedorDto.getCuit();
 		this.razonSocial = proveedorDto.getRazonSocial();
 		this.nombre = proveedorDto.getNombre();
-		this.direccion = direccion;
+		this.direccion = new Direccion(proveedorDto.getCalle(), proveedorDto.getAltura(), proveedorDto.getCodigoPostal(), proveedorDto.getPais(), proveedorDto.getProvincia(), proveedorDto.getCiudad());
 		this.telefono = proveedorDto.getTelefono();
 		this.correoElectronico = proveedorDto.getCorreoElectronico();
 		this.inicioActividades = proveedorDto.getInicioActividades();
@@ -178,7 +177,7 @@ public class Proveedor {
 	}
 	
 	public List<Factura> getFacturas(){
-		List<Factura> facturas = new ArrayList<Factura>();
+		List<Factura> facturas = new ArrayList<>();
 		for(Documento d: this.documentos) {
 			if (d instanceof Factura) {
 				facturas.add((Factura) d);
@@ -189,12 +188,23 @@ public class Proveedor {
 	
 	public void addCertificado(CertificadoRetencion cr) {
 		if(this.certificados == null) {
-			this.certificados = new ArrayList<CertificadoRetencion>();
+			this.certificados = new ArrayList<>();
 		}
 		this.certificados.add(cr);
 	}
 	
 	public void deleteCertificado(int index) {
 		this.certificados.remove(index);
+	}
+	
+	public void addProducto(Producto p) {
+		if(this.productos == null) {
+			this.productos = new ArrayList<>();
+		}
+		this.productos.add(p);
+	}
+	
+	public void deleteProducto(Producto p) {
+		this.productos.remove(p);
 	}
 }

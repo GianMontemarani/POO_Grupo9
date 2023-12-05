@@ -40,14 +40,6 @@ public class Cheque extends Documento{
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public String getString() {
-		return firmante;
-	}
-
-	public void setString(String firmante) {
-		this.firmante = firmante;
-	}
-
 	public String getFirmante() {
 		return firmante;
 	}

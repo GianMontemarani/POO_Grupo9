@@ -17,10 +17,19 @@ public class ProductoController {
 	
 	private ProductoController(List<Producto> productosList) {ProductoController.productosList = productosList;}
 	
+	public Producto getProductoModel(int id){
+        for (Producto Producto: productosList) {
+            if (Producto.getId() == id){
+                return Producto;
+            }
+        }
+        return  null;
+    }
+	
 	public static synchronized ProductoController getInstance() throws Exception{
 		if(INSTANCE == null) {
 			productosDao = new ProductoDao(Producto.class,getPathOutModel(Producto.class.getSimpleName()));
-			INSTANCE = new ProductoController(initModel());
+			INSTANCE = new ProductoController(initProducto());
 		}
 		return INSTANCE;
 	}
@@ -33,7 +42,7 @@ public class ProductoController {
         return dtoList;
     }
 	
-	public ProductoDto getProducto(int id) throws Exception {
+	public ProductoDto getProducto(int id){
         for (Producto Producto: productosList) {
             if (Producto.getId() == id){
                 return toDto(Producto);
@@ -52,7 +61,7 @@ public class ProductoController {
 		}
 	}
 	
-	public void eliminarById(int id) {
+	public void eliminarProducto(int id) {
         try {
             for(Producto p: productosList) {
                 if(p.getId() == id) {
@@ -64,7 +73,6 @@ public class ProductoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return;
     }
 	
 	public static ProductoDto toDto(Producto producto){
@@ -76,7 +84,7 @@ public class ProductoController {
         return  new File(dir+name+".json").getPath();
     }
 	
-	private static List<Producto> initModel(){
+	private static List<Producto> initProducto(){
 		try {
         	productosList = productosDao.getAll();
 		} catch (Exception e) {

@@ -94,7 +94,6 @@ public class FunctionsView {
 	public void reporteFacturas(DocumentoController documetnController) {
 		JFrame framConsulta = new JFrame("Reporte Facturas");
 		framConsulta.setSize(300, 200);
-		framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelConsulta = new JPanel(new CardLayout());
 		framConsulta.add(panelConsulta);
@@ -182,7 +181,6 @@ public class FunctionsView {
 	public void precioPorProducto(ProveedorController proveedorController) {
         JFrame framConsulta = new JFrame("Reporte Precio Por Producto");
         framConsulta.setSize(300, 150);
-        framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panelConsulta = new JPanel();
         framConsulta.add(panelConsulta);
@@ -251,7 +249,6 @@ public class FunctionsView {
 	public void listarOrdenesDePago(DocumentoController dController) {
         JFrame framConsulta = new JFrame("Listar Ordenes de Pago");
         framConsulta.setSize(300, 150);
-        framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panelConsulta = new JPanel();
         framConsulta.add(panelConsulta);
@@ -305,7 +302,6 @@ public class FunctionsView {
 	public void mostrarDeudaPorProveedor(ProveedorController proveedorController) {
         JFrame framConsulta = new JFrame("Obtener Deuda por Proveedor");
         framConsulta.setSize(300, 150);
-        framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panelConsulta = new JPanel();
         framConsulta.add(panelConsulta);

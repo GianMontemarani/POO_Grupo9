@@ -28,7 +28,4 @@ public class OrdenesDePagoDto {
 	public void setOrdenesDeLaFactura(List<OrdenDePago> ordenesDeLaFactura) {
 		this.ordenesDeLaFactura = ordenesDeLaFactura;
 	}
-	
-	
-	
 }

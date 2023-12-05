@@ -135,7 +135,7 @@ public class DocumentoController {
 	}
 	
 	public List<ImpuestoRetenidoDto> getImpuestosRetenidos(){
-		List<ImpuestoRetenidoDto> impuestosRetenidos = new ArrayList<ImpuestoRetenidoDto>();
+		List<ImpuestoRetenidoDto> impuestosRetenidos = new ArrayList<>();
 		for(Factura f: facturas) {
 			impuestosRetenidos.add(new ImpuestoRetenidoDto(f.getNumero(), f.getTotalARetener(), f.getImpuestos()));
 		}
@@ -143,7 +143,7 @@ public class DocumentoController {
 	}
 	
 	public List<LibroIvaDto> getLibroIva(){
-		List<LibroIvaDto> libroIva = new ArrayList<LibroIvaDto>();
+		List<LibroIvaDto> libroIva = new ArrayList<>();
 		for(Factura f: facturas) {
 			for(ItemDeFactura item: f.getProductos()) {
 				libroIva.add(new LibroIvaDto(f.getProveedor().getCuit(), f.getProveedor().getNombre(), f.getFecha(), item.getImpuesto().getPorcentaje(), (item.getImpuesto().getPorcentaje()*item.getImporte())/100 ));
@@ -222,7 +222,6 @@ public class DocumentoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return;
     }
 
 	public void elimiarNotasDeCredito(int id) {
@@ -237,7 +236,6 @@ public class DocumentoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return;
 	}
 
 	public void elimiarNotasDeDebito(int id) {
@@ -252,7 +250,6 @@ public class DocumentoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return;
 	}
 
 	public void eliminarOrdenDeCompra(int id) {
@@ -267,7 +264,6 @@ public class DocumentoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return;
 	}
 
 	public void eliminarCheque(int id) {
@@ -282,7 +278,6 @@ public class DocumentoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return;
 	}
 	
 	private static String getPathOutModel(String name){

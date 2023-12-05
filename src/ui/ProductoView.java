@@ -4,18 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -23,11 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import controladores.ProductoController;
-import controladores.ProveedorController;
 import dto.ProductoDto;
-import dto.ProveedorDto;
-import modelo.Rubro;
-import ui.ProveedorView.ButtonEditor;
 
 public class ProductoView {
 
@@ -158,7 +149,7 @@ public class ProductoView {
 
 			public boolean isCellEditable(int row, int column) {
 				return column == 5;
-			};
+			}
 		};
 
 		// Boton de eliminar
@@ -191,7 +182,7 @@ public class ProductoView {
 				int selectedRow = table.getSelectedRow();
 
 				int id = (int) datos[selectedRow][0];
-				productoController.eliminarById(id);
+				productoController.eliminarProducto(id);
 				System.out.println("Elimina el producto");
 				view.listar(productoController);
 			});
