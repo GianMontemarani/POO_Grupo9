@@ -16,6 +16,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ import javax.swing.text.MaskFormatter;
 
 import controladores.ProveedorController;
 import dto.ProveedorDto;
+import modelo.CertificadoRetencion;
 import modelo.Rubro;
 
 public class ProveedorView {
@@ -81,7 +83,7 @@ public class ProveedorView {
 		}
 		// Creamos el array de columnas
 		String[] nombresColumnas = { "Cuit", "Razón Social", "Nombre", "Telefono", "Correo", "Inicio Actividades",
-				"Max Deuda", "Eliminar" };
+				"Max Deuda", "Documentos", "Certificado", "Eliminar" };
 		// Creamos la tabla a partir de los datos y las columnas
 		DefaultTableModel modeloTabla = new DefaultTableModel(datos, nombresColumnas);
 
@@ -90,19 +92,40 @@ public class ProveedorView {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
-				return column == 7;
+				int[] editableColumns = { 7, 8, 9 };
+				for (int editableColumn : editableColumns) {
+					if (column == editableColumn) {
+						return true;
+					}
+				}
+				return false;
 			};
 		};
 
 		// Boton de eliminar
 		BotonEliminar botonEliminar = new BotonEliminar();
-		TableColumn columnaBoton = tabla.getColumnModel().getColumn(7);
+		TableColumn columnaBoton = tabla.getColumnModel().getColumn(9);
 		columnaBoton.setCellRenderer(botonEliminar);
 		columnaBoton.setCellEditor(
 				new ButtonEditor(new JTextField(), botonEliminar, tabla, datos, proveedorController, this));
 
+		
+
+		// POP up Certificado
+		BotonCertificado botonCertificado = new BotonCertificado();
+		TableColumn columnaBotonCert = tabla.getColumnModel().getColumn(8);
+		columnaBotonCert.setCellRenderer(botonCertificado);
+		columnaBotonCert.setCellEditor(
+				new ButtonEditorCert(new JTextField(), botonCertificado, tabla, datos, proveedorController, this, panel));
+
+
+		
+		
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		panel.add(scrollPane, BorderLayout.CENTER);
+
+		
+		
 
 		/* Actualizo el frame */
 		panel.revalidate();
@@ -284,7 +307,7 @@ public class ProveedorView {
 						parsedDate, rubrosSeleccionados, Float.parseFloat(deudaMaximaTexto.getText()),
 						calleTexto.getText(), Integer.parseInt(alturaTexto.getText()),
 						Integer.parseInt(codigoPostalTexto.getText()), paisTexto.getText(), provinciaTexto.getText(),
-						ciudadTexto.getText());
+						ciudadTexto.getText(), new ArrayList<CertificadoRetencion>());
 				proveedorController.addProveedor(pDto);
 			}
 		});
@@ -319,6 +342,34 @@ public class ProveedorView {
 			return null;
 		}
 	}
+
+	static class ButtonEditorCert extends DefaultCellEditor {
+		private BotonCertificado button;
+
+		public ButtonEditorCert(JTextField textField, BotonCertificado button, JTable table, Object[][] datos,
+				ProveedorController proveedorController, ProveedorView view, JPanel panel) {
+			super(textField);
+			this.button = button;
+
+
+			button.addActionListener(e -> {
+				fireEditingStopped();
+				int selectedRow = table.getSelectedRow();
+				int cuit = (int) datos[selectedRow][0];
+				
+				CertificadoView certificadoView = new CertificadoView(panel, cuit, proveedorController);
+				
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			button.setText("Eliminado");
+			return button;
+		}
+	}
+	
 
 	static class ButtonEditor extends DefaultCellEditor {
 		private BotonEliminar button;
