@@ -148,7 +148,7 @@ public class FunctionsView {
 						datos[i][2] = factura.getImporte();
 						datos[i][3] = factura.getOrdenCompra().getNumero();
 						datos[i][4] = factura.estaPaga();
-						datos[i][5] = factura.getProveedor().getNombre();
+						datos[i][5] = factura.getProveedor();
 						datos[i][6] = factura.getTotalARetener();
 					}
 					// Creamos el array de columnas
@@ -324,23 +324,24 @@ public class FunctionsView {
             public void actionPerformed(ActionEvent e) {
                float deuda = 0;
                
-               
-               
-
                 if (cuitTexto.getText().length() > 0) {
                     deuda = proveedorController.getDeudaXProveedor(Integer.parseInt(cuitTexto.getText()));
                 } else {
                     System.out.println("Campo CUIT vacío");
                 }
                 
-                deuda = 100;
+                panelConsulta.removeAll();
+                
                 JLabel deudaLabel = new JLabel("DEUDA:");
                 deudaLabel.setBounds(50, 25, 80, 25);
                 panelConsulta.add(deudaLabel);
                 
                 JLabel deudaMonto = new JLabel(String.valueOf(deuda));
-                deudaMonto.setBounds(50, 25, 80, 25);
+                deudaMonto.setBounds(100, 25, 80, 25);
                 panelConsulta.add(deudaMonto);
+                
+                panelConsulta.revalidate();
+                panelConsulta.repaint();
             }
         });
 

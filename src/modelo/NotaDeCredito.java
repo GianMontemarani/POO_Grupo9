@@ -6,8 +6,8 @@ import dto.NotaDto;
 
 public class NotaDeCredito extends Documento {
 	
-	public NotaDeCredito(int numero, float importe, Date fecha, Proveedor proveedor) {
-		super(numero, importe, fecha, proveedor);
+	public NotaDeCredito(int numero, float importe, Date fecha, int proveedorCuit) {
+		super(numero, importe, fecha, proveedorCuit);
 	}
 
 	public NotaDeCredito(NotaDto notaDto, int numero) {

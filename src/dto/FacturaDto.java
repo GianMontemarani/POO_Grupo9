@@ -8,7 +8,6 @@ import modelo.Impuesto;
 import modelo.ItemDeFactura;
 import modelo.OrdenDeCompra;
 import modelo.OrdenDePago;
-import modelo.Proveedor;
 
 import java.util.Date;
 
@@ -16,7 +15,7 @@ public class FacturaDto{
 	private int numero;
 	private float importe;
 	private Date fecha;
-	private Proveedor proveedor;
+	private int proveedorCuit;
 	private OrdenDeCompra ordenCompra;
 	private List<ItemDeFactura> productos;
 	private List<Impuesto> impuestos;
@@ -24,12 +23,12 @@ public class FacturaDto{
 	private float totalARetener;
 	private List<ItemDeFactura> items;
 
-	public FacturaDto(float importe, Date fecha, Proveedor proveedor, OrdenDeCompra ordenCompra,
+	public FacturaDto(float importe, Date fecha, int proveedorCuit, OrdenDeCompra ordenCompra,
 			List<ItemDeFactura> productos, List<Impuesto> impuestos, List<OrdenDePago> ordenDePago,
 			float totalARetener, List<ItemDeFactura> items) {
 		this.importe = importe;
 		this.fecha = fecha;
-		this.proveedor = proveedor;
+		this.proveedorCuit = proveedorCuit;
 		this.ordenCompra = ordenCompra;
 		this.productos = productos;
 		this.impuestos = impuestos;
@@ -42,7 +41,7 @@ public class FacturaDto{
 		this.numero= factura.getNumero();
 		this.importe = factura.getImporte();
 		this.fecha = factura.getFecha();
-		this.proveedor =  factura.getProveedor();
+		this.proveedorCuit =  factura.getProveedor();
 		this.ordenCompra = factura.getOrdenCompra();
 		this.productos = factura.getProductos();
 		this.impuestos = factura.getImpuestos();
@@ -75,12 +74,12 @@ public class FacturaDto{
 		this.fecha = fecha;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
+	public int getProveedor() {
+		return proveedorCuit;
 	}
 
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setProveedor(int proveedorCuit) {
+		this.proveedorCuit = proveedorCuit;
 	}
 
 	public OrdenDeCompra getOrdenCompra() {

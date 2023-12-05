@@ -9,9 +9,9 @@ public class Cheque extends Documento{
 	private Date fechaVencimiento;
 	private String firmante;
 	
-	public Cheque(int numero, float importe, Date fecha, Proveedor proveedor, Boolean propio, Date fechaVencimiento,
+	public Cheque(int numero, float importe, Date fecha, int proveedorCuit, Boolean propio, Date fechaVencimiento,
 			String firmante) {
-		super(numero, importe, fecha, proveedor);
+		super(numero, importe, fecha, proveedorCuit);
 		this.propio = propio;
 		this.fechaVencimiento = fechaVencimiento;
 		this.firmante = firmante;

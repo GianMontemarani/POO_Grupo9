@@ -6,9 +6,11 @@ import java.util.List;
 
 import dao.ProveedorDao;
 import dto.CuentaCorrienteProveedorDto;
+import dto.FacturaDto;
 import dto.PreciosProveedorDto;
 import dto.ProveedorDto;
 import modelo.CertificadoRetencion;
+import modelo.Documento;
 import modelo.Factura;
 import modelo.OrdenDePago;
 import modelo.Producto;
@@ -23,7 +25,7 @@ public class ProveedorController {
 		
 		private ProveedorController(List<Proveedor> proveedoresList) {ProveedorController.proveedoresList = proveedoresList;}
 		
-		public static Proveedor getProveedorModel(int cuit) {
+		public Proveedor getProveedorModel(int cuit) {
 			try {
 				for(Proveedor p: proveedoresList) {
 					if(p.getCuit() == cuit) {
@@ -91,14 +93,15 @@ public class ProveedorController {
 		
 		public float getDeudaXProveedor(int cuit) {
 			float deuda = 0;
-			for(Proveedor p: proveedoresList) {
-				if(p.getCuit() == cuit) {
-					for(Factura f: p.getFacturas()) {
-						deuda += f.getDeuda();
-					}
+			Proveedor p = this.getProveedorModel(cuit);
+			if(p != null) {
+				for(Factura f: p.getFacturas()) {
+					deuda += f.getDeuda();
 				}
+				return deuda;
+			}else {
+				return 0;
 			}
-			return deuda;
 		}
 		
 		public CuentaCorrienteProveedorDto getCuentaCorrientePorProveedor(int cuit) {
@@ -169,6 +172,18 @@ public class ProveedorController {
 				proveedorDao.saveAll(proveedoresList);
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+		
+		public void agregarDocumento(int cuit, Documento d) {
+			Proveedor p = this.getProveedorModel(cuit);
+			if(p != null) {
+				try {
+					p.addDocumento(d);
+					proveedorDao.saveAll(proveedoresList);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		

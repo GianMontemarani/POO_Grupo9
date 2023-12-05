@@ -6,10 +6,10 @@ public class ItemDeCompra {
 	private float importe;
 	private Impuesto impuesto;
 
-	public ItemDeCompra(int cantidad, Producto producto, float importe, Impuesto impuesto) {
+	public ItemDeCompra(int cantidad, Producto producto, Impuesto impuesto) {
 		this.cantidad = cantidad;
 		this.producto = producto;
-		this.importe = importe;
+		this.importe = cantidad*producto.getPrecio();
 		this.impuesto = impuesto;
 	}
 

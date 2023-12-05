@@ -18,11 +18,13 @@ import dto.NotaDto;
 import dto.OrdenDeCompraDto;
 import dto.OrdenesDePagoDto;
 import modelo.Cheque;
+import modelo.Documento;
 import modelo.Factura;
 import modelo.ItemDeFactura;
 import modelo.NotaDeCredito;
 import modelo.NotaDeDebito;
 import modelo.OrdenDeCompra;
+import modelo.OrdenDePago;
 
 public class DocumentoController {
 	private static DocumentoController INSTANCE = null;
@@ -45,6 +47,53 @@ public class DocumentoController {
 		DocumentoController.notasDeDebito = notasDeDebitos;
 		DocumentoController.ordenesDeCompra = ordenesDeCompras;
 		DocumentoController.cheques = cheques;
+		syncOcEnFacturas(this);
+		syncNotasEnOp(this);
+	}
+	
+	public OrdenDeCompra getOcModel(int id) {
+		for(OrdenDeCompra oc: ordenesDeCompra) {
+			if(oc.getNumero() == id) {
+				return oc;
+			}
+		}
+		return null;
+	}
+	
+	public Factura getFacturaModel(int id) {
+		for(Factura factura: facturas) {
+			if(factura.getNumero() == id) {
+				return factura;
+			}
+		}
+		return null;
+	}
+	
+	public Cheque getChequeModel(int id) {
+		for(Cheque chq: cheques) {
+			if(chq.getNumero() == id) {
+				return chq;
+			}
+		}
+		return null;
+	}
+	
+	public NotaDeCredito getNCModel(int id) {
+		for(NotaDeCredito nc: notasDeCredito) {
+			if(nc.getNumero() == id) {
+				return nc;
+			}
+		}
+		return null;
+	}
+	
+	public NotaDeDebito getNDModel(int id) {
+		for(NotaDeDebito nd: notasDeDebito) {
+			if(nd.getNumero() == id) {
+				return nd;
+			}
+		}
+		return null;
 	}
 
 	public static synchronized DocumentoController getInstance() {
@@ -85,7 +134,7 @@ public class DocumentoController {
 	public List<FacturaDto> getFacturasByFilter(int cuit) {
 		List<FacturaDto> dtoList = new ArrayList<>();
         for (Factura factura : facturas) {
-        	if(factura.getProveedor().getCuit() == cuit) {
+        	if(factura.getProveedor() == cuit) {
         		dtoList.add(toDto(factura));
         	}
         }
@@ -95,7 +144,7 @@ public class DocumentoController {
 	public List<FacturaDto> getFacturasByFilter(Date fecha, int cuit) {
 		List<FacturaDto> dtoList = new ArrayList<>();
         for (Factura factura : facturas) {
-        	if(factura.getFecha().equals(fecha) && factura.getProveedor().getCuit() == cuit) {
+        	if(factura.getFecha().equals(fecha) && factura.getProveedor() == cuit) {
         		dtoList.add(toDto(factura));
         	}
         }
@@ -143,13 +192,20 @@ public class DocumentoController {
 	}
 	
 	public List<LibroIvaDto> getLibroIva(){
-		List<LibroIvaDto> libroIva = new ArrayList<>();
-		for(Factura f: facturas) {
-			for(ItemDeFactura item: f.getProductos()) {
-				libroIva.add(new LibroIvaDto(f.getProveedor().getCuit(), f.getProveedor().getNombre(), f.getFecha(), item.getImpuesto().getPorcentaje(), (item.getImpuesto().getPorcentaje()*item.getImporte())/100 ));
+		try {
+			ProveedorController pController = ProveedorController.getInstance();
+			List<LibroIvaDto> libroIva = new ArrayList<>();
+			for(Factura f: facturas) {
+				for(ItemDeFactura item: f.getProductos()) {
+					libroIva.add(new LibroIvaDto(f.getProveedor(), pController.getProveedor(f.getProveedor()).getNombre(), f.getFecha(), item.getImpuesto().getPorcentaje(), (item.getImpuesto().getPorcentaje()*item.getImporte())/100 ));
+				}
 			}
+			return libroIva;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return libroIva;
+		
 	}
 	
 	public List<OrdenesDePagoDto> getOrdenesDePago(){
@@ -165,8 +221,9 @@ public class DocumentoController {
 			Factura facturaNueva = new Factura(facturaDto, facturas.size()+1);
 			facturas.add(facturaNueva);
 			facturaDao.save(facturaNueva);
+			addDocumentToProveedor(facturaNueva.getProveedor(), facturaNueva);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println();
 		}
 	}
 	
@@ -175,6 +232,7 @@ public class DocumentoController {
 			NotaDeCredito notaDeCredito = new NotaDeCredito(notaDto, notasDeCredito.size()+1);
 			notasDeCredito.add(notaDeCredito);
 			notaDeCreditoDao.save(notaDeCredito);
+			addDocumentToProveedor(notaDeCredito.getProveedor(), notaDeCredito);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -185,6 +243,7 @@ public class DocumentoController {
 			NotaDeDebito notaDeDebito = new NotaDeDebito(notaDto, notasDeDebito.size()+1);
 			notasDeDebito.add(notaDeDebito);
 			notaDeDebitoDao.save(notaDeDebito);
+			addDocumentToProveedor(notaDeDebito.getProveedor(), notaDeDebito);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -195,6 +254,7 @@ public class DocumentoController {
 			OrdenDeCompra ordenDeCompra = new OrdenDeCompra(ordenDeCompraDto, ordenesDeCompra.size()+1);
 			ordenesDeCompra.add(ordenDeCompra);
 			ordenDeCompraDao.save(ordenDeCompra);
+			addDocumentToProveedor(ordenDeCompra.getProveedor(), ordenDeCompra);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -205,6 +265,7 @@ public class DocumentoController {
 			Cheque cheque = new Cheque(chequeDto, cheques.size()+1);
 			cheques.add(cheque);
 			chequeDao.save(cheque);
+			addDocumentToProveedor(cheque.getProveedor(), cheque);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -348,5 +409,58 @@ public class DocumentoController {
 			e.printStackTrace();
 		}
 		return  cheques;
+	}
+	
+	private static void syncOcEnFacturas(DocumentoController dc) {
+		try {
+			for(Factura f: facturas) {
+				OrdenDeCompra ordenDeCompraSync = dc.getOcModel(f.getNumero());
+				f.setOrdenCompra(ordenDeCompraSync);
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void syncNotasEnOp(DocumentoController dc) {
+		try {
+			for(Factura f: facturas) {
+				List<OrdenDePago> ordenesPago = f.getOrdenDePago();
+				if(ordenesPago != null) {
+					for(OrdenDePago op: ordenesPago) {
+						List<Cheque> chqSync = new ArrayList<Cheque>();
+						for(Cheque chq: op.getCheques()) {
+							chqSync.add(dc.getChequeModel(chq.getNumero()));
+						}
+						op.setCheques(chqSync);
+						
+						List<NotaDeCredito> ncSync = new ArrayList<NotaDeCredito>();
+						for(NotaDeCredito nc: op.getNotasCredito()) {
+							ncSync.add(dc.getNCModel(nc.getNumero()));
+						}
+						op.setNotasCredito(ncSync);
+						
+						List<NotaDeDebito> ndSync = new ArrayList<NotaDeDebito>();
+						for(NotaDeDebito nd: op.getNotasDebito()) {
+							ndSync.add(dc.getNDModel(nd.getNumero()));
+						}
+						op.setNotasDebito(ndSync);
+					}
+				}
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void addDocumentToProveedor(int cuit, Documento d) {
+		ProveedorController pController;
+		try {
+			pController = ProveedorController.getInstance();
+			pController.agregarDocumento(cuit, d);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

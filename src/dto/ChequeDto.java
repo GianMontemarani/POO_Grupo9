@@ -3,23 +3,22 @@ package dto;
 import java.util.Date;
 
 import modelo.Cheque;
-import modelo.Proveedor;
 
 public class ChequeDto {
 	private int numero;
 	private float importe;
 	private Date fecha;
-	private Proveedor proveedor;
+	private int proveedorCuit;
 	private Boolean tipoPropio;
 	private Date fechaVencimientoDate;
 	private String firmante;
 	
-	public ChequeDto(int numero, float importe, Date fecha, Proveedor proveedor, Boolean tipoPropio,
+	public ChequeDto(int numero, float importe, Date fecha, int proveedorCuit, Boolean tipoPropio,
 			Date fechaVencimientoDate, String firmante) {
 		this.numero = numero;
 		this.importe = importe;
 		this.fecha = fecha;
-		this.proveedor = proveedor;
+		this.proveedorCuit = proveedorCuit;
 		this.tipoPropio = tipoPropio;
 		this.fechaVencimientoDate = fechaVencimientoDate;
 		this.firmante = firmante;
@@ -29,7 +28,7 @@ public class ChequeDto {
 		this.numero = cheque.getNumero();
 		this.importe = cheque.getImporte();
 		this.fecha = cheque.getFecha();
-		this.proveedor = cheque.getProveedor();
+		this.proveedorCuit = cheque.getProveedor();
 		this.tipoPropio = cheque.getPropio();
 		this.fechaVencimientoDate = cheque.getFechaVencimiento();
 		this.firmante = cheque.getFirmante();
@@ -59,12 +58,12 @@ public class ChequeDto {
 		this.fecha = fecha;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
+	public int getProveedor() {
+		return proveedorCuit;
 	}
 
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setProveedor(int proveedorCuit) {
+		this.proveedorCuit = proveedorCuit;
 	}
 
 	public Boolean getTipoPropio() {
