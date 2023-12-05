@@ -69,7 +69,7 @@ public class ProveedorDto {
 	
 
 
-	public int getCuit() {
+	public Integer getCuit() {
 		return cuit;
 	}
 

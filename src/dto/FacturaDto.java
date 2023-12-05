@@ -131,6 +131,8 @@ public class FacturaDto{
 		this.items = items;
 	}
 	
+	
+	// TODO @gian pincha si es null xd
 	public float getDeuda() {
 		float importe = this.getImporte();
 		for(OrdenDePago op: this.ordenDePago) {

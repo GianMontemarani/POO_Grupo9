@@ -38,6 +38,19 @@ public class MenuApp {
 		return menu;
 	}
 	
+	
+	public JMenu menuDocumentos(JPanel panel) {
+		menu = new JMenu("Documentos");
+
+		DocumentosView documentosScreen = new DocumentosView(panel);
+		menu.add(documentosScreen.getFactura());
+		menu.add(documentosScreen.getOrdenDeCompra());
+		menu.add(documentosScreen.getOrdenDePago());
+
+		return menu;
+	}
+	
+	
 	public JMenu menuFunctions(JPanel panel) {
 		menu = new JMenu("Funciones");
 
@@ -52,5 +65,6 @@ public class MenuApp {
 
 		return menu;
 	}
+
 
 }
