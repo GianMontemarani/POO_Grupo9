@@ -207,4 +207,12 @@ public class Proveedor {
 	public void deleteProducto(Producto p) {
 		this.productos.remove(p);
 	}
+	
+	public List<Integer> getProductosId(){
+		List<Integer> list = new ArrayList<Integer>();
+		for(Producto p: this.productos) {
+			list.add(p.getId());
+		}
+		return list;
+	}
 }
