@@ -33,6 +33,7 @@ import javax.swing.text.MaskFormatter;
 import controladores.ProveedorController;
 import dto.ProveedorDto;
 import modelo.CertificadoRetencion;
+import modelo.Producto;
 import modelo.Rubro;
 
 public class ProveedorView {
@@ -83,7 +84,7 @@ public class ProveedorView {
 		}
 		// Creamos el array de columnas
 		String[] nombresColumnas = { "Cuit", "Razón Social", "Nombre", "Telefono", "Correo", "Inicio Actividades",
-				"Max Deuda", "Documentos", "Certificado", "Eliminar" };
+				"Max Deuda", "Productos", "Certificado", "Eliminar" };
 		// Creamos la tabla a partir de los datos y las columnas
 		DefaultTableModel modeloTabla = new DefaultTableModel(datos, nombresColumnas);
 
@@ -118,7 +119,13 @@ public class ProveedorView {
 		columnaBotonCert.setCellEditor(
 				new ButtonEditorCert(new JTextField(), botonCertificado, tabla, datos, proveedorController, this, panel));
 
-
+		
+		// POP up Producto
+		BotonProducto botonProducto = new BotonProducto();
+		TableColumn columnaBotonProducto = tabla.getColumnModel().getColumn(7);
+		columnaBotonProducto.setCellRenderer(botonProducto);
+		columnaBotonProducto.setCellEditor(
+				new ButtonEditorProducto(new JTextField(), botonProducto, tabla, datos, proveedorController, this, panel));
 		
 		
 		JScrollPane scrollPane = new JScrollPane(tabla);
@@ -307,7 +314,7 @@ public class ProveedorView {
 						parsedDate, rubrosSeleccionados, Float.parseFloat(deudaMaximaTexto.getText()),
 						calleTexto.getText(), Integer.parseInt(alturaTexto.getText()),
 						Integer.parseInt(codigoPostalTexto.getText()), paisTexto.getText(), provinciaTexto.getText(),
-						ciudadTexto.getText(), new ArrayList<CertificadoRetencion>());
+						ciudadTexto.getText(), new ArrayList<CertificadoRetencion>(), new ArrayList<Producto>());
 				proveedorController.addProveedor(pDto);
 			}
 		});
@@ -365,22 +372,42 @@ public class ProveedorView {
 		@Override
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
 				int column) {
-			button.setText("Eliminado");
+			button.setText("Abierto");
 			return button;
 		}
 	}
 	
+	
+	static class ButtonEditorProducto extends DefaultCellEditor {
+		private BotonProducto button;
+		public ButtonEditorProducto(JTextField textField, BotonProducto button, JTable table, Object[][] datos,
+				ProveedorController proveedorController, ProveedorView view, JPanel panel) {
+			super(textField);
+			this.button = button;
+			button.addActionListener(e -> {
+				fireEditingStopped();
+				int selectedRow = table.getSelectedRow();
+				int cuit = (int) datos[selectedRow][0];
+				PopUpProductos popUpProductos = new PopUpProductos(panel, cuit, proveedorController);
+			});
+		}
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			button.setText("Abierto");
+			return button;
+		}
+	}
+	
+	
 
 	static class ButtonEditor extends DefaultCellEditor {
 		private BotonEliminar button;
-
 		public ButtonEditor(JTextField textField, BotonEliminar button, JTable table, Object[][] datos,
 				ProveedorController proveedorController, ProveedorView view) {
 			super(textField);
 			this.button = button;
-
 			button.addActionListener(e -> {
-
 				fireEditingStopped();
 				int selectedRow = table.getSelectedRow();
 
@@ -390,7 +417,6 @@ public class ProveedorView {
 				view.listar(proveedorController);
 			});
 		}
-
 		@Override
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
 				int column) {

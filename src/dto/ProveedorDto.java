@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import modelo.CertificadoRetencion;
+import modelo.Documento;
+import modelo.Producto;
 import modelo.Proveedor;
 import modelo.Rubro;
 
@@ -23,10 +25,11 @@ public class ProveedorDto {
 	private String provincia;
 	private String ciudad;
 	private List<CertificadoRetencion> certificados;
+	private List<Producto> productos;
 	
 	public ProveedorDto(int cuit, String razonSocial, String nombre, int telefono, String correoElectronico,
 			Date inicioActividades, List<Rubro> rubros, float maxDeuda, String calle, int altura, int codigoPostal,
-			String pais, String provincia, String ciudad, List<CertificadoRetencion> certificados) {
+			String pais, String provincia, String ciudad, List<CertificadoRetencion> certificados, List<Producto> productos) {
 		this.cuit = cuit;
 		this.razonSocial = razonSocial;
 		this.nombre = nombre;
@@ -42,6 +45,7 @@ public class ProveedorDto {
 		this.provincia = provincia;
 		this.ciudad = ciudad;
 		this.certificados = certificados;
+		this.productos = productos;
 	}
 	
 	public ProveedorDto(Proveedor proveedor) {
@@ -60,6 +64,7 @@ public class ProveedorDto {
 		this.provincia = proveedor.getDireccion().getProvincia();
 		this.ciudad = proveedor.getDireccion().getCiudad();
 		this.certificados = proveedor.getCertificados();
+		this.productos = proveedor.getProductos();
 	}
 	
 
@@ -126,6 +131,14 @@ public class ProveedorDto {
 
 	public void setCertificados(List<CertificadoRetencion> certificados) {
 		this.certificados = certificados;
+	}
+	
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
 	}
 	
 	public float getMaxDeuda() {
