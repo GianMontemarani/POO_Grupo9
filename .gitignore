@@ -3,4 +3,4 @@ bin/
 .settings/org.eclipse.core.resources.prefs
 .DS_Store
 .metadata
-./src/Test/Test.java
+src/Test/Test.java
