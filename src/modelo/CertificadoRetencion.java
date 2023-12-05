@@ -47,7 +47,8 @@ public class CertificadoRetencion {
 		}
 	}
  
-  @Override
+  	@Override
 	public String toString() {
 		return "fechaInicio: "+fechaInicio+"fechaVencimiento: "+fechaVencimiento+"activo: "+"impuesto: "+impuesto;
-  }
+  	}
+}
