@@ -14,10 +14,10 @@ public class Factura extends Documento {
 	private float totalARetener;
 	private List<ItemDeFactura> items;
 
-	public Factura(int numero, float importe, Date fecha, Proveedor proveedor, OrdenDeCompra ordenCompra,
+	public Factura(int numero, float importe, Date fecha, int proveedorCuit, OrdenDeCompra ordenCompra,
 			List<ItemDeFactura> productos, List<Impuesto> impuestos, List<OrdenDePago> ordenDePago,
 			float totalARetener, List<ItemDeFactura> items) {
-		super(numero, importe, fecha, proveedor);
+		super(numero, importe, fecha, proveedorCuit);
 		this.ordenCompra = ordenCompra;
 		this.productos = productos;
 		this.impuestos = impuestos;

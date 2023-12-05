@@ -11,8 +11,8 @@ public class OrdenDePago extends Documento{
 	private List<Cheque> cheques;
 	
 	public OrdenDePago(List<Factura> facturas, List<NotaDeDebito> notasDebito,
-			List<NotaDeCredito> notasCredito, float pagoEfectivo, List<Cheque> cheques, int numero, float importe, Date fecha, Proveedor proveedor) {
-		super(numero, importe, fecha, proveedor);
+			List<NotaDeCredito> notasCredito, float pagoEfectivo, List<Cheque> cheques, int numero, float importe, Date fecha, int proveedorCuit) {
+		super(numero, importe, fecha, proveedorCuit);
 		this.facturas = facturas;
 		this.notasDebito = notasDebito;
 		this.notasCredito = notasCredito;

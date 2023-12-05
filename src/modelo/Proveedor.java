@@ -178,9 +178,11 @@ public class Proveedor {
 	
 	public List<Factura> getFacturas(){
 		List<Factura> facturas = new ArrayList<>();
-		for(Documento d: this.documentos) {
-			if (d instanceof Factura) {
-				facturas.add((Factura) d);
+		if(this.documentos != null) {
+			for(Documento d: this.documentos) {
+				if (d instanceof Factura) {
+					facturas.add((Factura) d);
+				}
 			}
 		}
 		return facturas;
@@ -206,6 +208,13 @@ public class Proveedor {
 	
 	public void deleteProducto(Producto p) {
 		this.productos.remove(p);
+	}
+	
+	public void addDocumento(Documento d) {
+		if(this.documentos == null) {
+			this.documentos = new ArrayList<>();
+		}
+		this.documentos.add(d);
 	}
 	
 	public List<Integer> getProductosId(){

@@ -5,20 +5,19 @@ import java.util.List;
 
 import modelo.ItemDeCompra;
 import modelo.OrdenDeCompra;
-import modelo.Proveedor;
 
 public class OrdenDeCompraDto {
 	private int numero;
 	private float importe;
 	private Date fecha;
-	private Proveedor proveedor;
+	private int proveedorCuit;
 	private List<ItemDeCompra> items;
 	
-	public OrdenDeCompraDto(int numero, float importe, Date fecha, Proveedor proveedor, List<ItemDeCompra> items) {
+	public OrdenDeCompraDto(int numero, float importe, Date fecha, int proveedorCuit, List<ItemDeCompra> items) {
 		this.numero = numero;
 		this.importe = importe;
 		this.fecha = fecha;
-		this.proveedor = proveedor;
+		this.proveedorCuit = proveedorCuit;
 		this.items = items;
 	}
 
@@ -26,7 +25,7 @@ public class OrdenDeCompraDto {
 		this.numero = ordenDeCompra.getNumero();
 		this.importe = ordenDeCompra.getImporte();
 		this.fecha = ordenDeCompra.getFecha();
-		this.proveedor = ordenDeCompra.getProveedor();
+		this.proveedorCuit = ordenDeCompra.getProveedor();
 		this.items = ordenDeCompra.getItems();
 	}
 
@@ -54,12 +53,12 @@ public class OrdenDeCompraDto {
 		this.fecha = fecha;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
+	public int getProveedor() {
+		return proveedorCuit;
 	}
 
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setProveedor(int proveedorCuit) {
+		this.proveedorCuit = proveedorCuit;
 	}
 
 	public List<ItemDeCompra> getItems() {

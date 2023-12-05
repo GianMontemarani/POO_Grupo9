@@ -6,19 +6,19 @@ public abstract class Documento {
 	private int numero;
 	private float importe;
 	private Date fecha;
-	private Proveedor proveedor;
+	private int proveedorCuit;
 	
-	protected Documento(float importe, Date fecha, Proveedor proveedor) {
+	protected Documento(float importe, Date fecha, int proveedor) {
 		this.importe = importe;
 		this.fecha = fecha;
-		this.proveedor = proveedor;
+		this.proveedorCuit = proveedor;
 	}
 	
-	protected Documento(int numero, float importe, Date fecha, Proveedor proveedor) {
+	protected Documento(int numero, float importe, Date fecha, int proveedor) {
 		this.numero = numero;
 		this.importe = importe;
 		this.fecha = fecha;
-		this.proveedor = proveedor;
+		this.proveedorCuit = proveedor;
 	}
 
 	public int getNumero() {
@@ -45,11 +45,11 @@ public abstract class Documento {
 		this.fecha = fecha;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
+	public int getProveedor() {
+		return proveedorCuit;
 	}
 
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setProveedor(int proveedor) {
+		this.proveedorCuit = proveedor;
 	}
 }

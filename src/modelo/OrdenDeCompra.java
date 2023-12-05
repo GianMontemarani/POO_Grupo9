@@ -9,13 +9,13 @@ import java.util.Date;
 public class OrdenDeCompra extends Documento{
 	private List<ItemDeCompra> items;
 	
-	public OrdenDeCompra(int numero, float importe, Date fecha, Proveedor proveedor, List<ItemDeCompra> items) {
-		super(numero, importe, fecha, proveedor);
+	public OrdenDeCompra(int numero, Date fecha, int proveedorCuit, List<ItemDeCompra> items) {
+		super(numero,calcularImporte(items), fecha, proveedorCuit);
 		this.items = items;
 	}
 
 	public OrdenDeCompra(OrdenDeCompraDto ordenDeCompraDto, int id) {
-		super(id, ordenDeCompraDto.getImporte(), ordenDeCompraDto.getFecha(), ordenDeCompraDto.getProveedor());
+		super(id, calcularImporte(ordenDeCompraDto.getItems()), ordenDeCompraDto.getFecha(), ordenDeCompraDto.getProveedor());
 		this.items = ordenDeCompraDto.getItems();
 	}
 
@@ -25,5 +25,13 @@ public class OrdenDeCompra extends Documento{
 	
 	public void setItems(List<ItemDeCompra> items) {
 		this.items = items;
+	}
+	
+	public static float calcularImporte(List<ItemDeCompra> items) {
+		float importe = 0;
+		for(ItemDeCompra i: items) {
+			importe += i.getImporte();
+		}
+		return importe;
 	}
 }

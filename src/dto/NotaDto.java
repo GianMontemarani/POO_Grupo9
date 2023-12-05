@@ -9,34 +9,33 @@ import modelo.NotaDeCredito;
 import modelo.NotaDeDebito;
 import modelo.OrdenDeCompra;
 import modelo.OrdenDePago;
-import modelo.Proveedor;
 
 public class NotaDto {
 	private int numero;
 	private float importe;
 	private Date fecha;
-	private Proveedor proveedor;
+	private int proveedorCuit;
 
-	public NotaDto(float importe, Date fecha, Proveedor proveedor, OrdenDeCompra ordenCompra,
+	public NotaDto(float importe, Date fecha, int proveedorCuit, OrdenDeCompra ordenCompra,
 			List<ItemDeFactura> productos, List<Impuesto> impuestos, List<OrdenDePago> ordenDePago,
 			float totalARetener, List<ItemDeFactura> items) {
 		this.importe = importe;
 		this.fecha = fecha;
-		this.proveedor = proveedor;
+		this.proveedorCuit = proveedorCuit;
 	}
 
 	public NotaDto(NotaDeCredito notaDeCredito) {
 		this.numero= notaDeCredito.getNumero();
 		this.importe = notaDeCredito.getImporte();
 		this.fecha = notaDeCredito.getFecha();
-		this.proveedor =  notaDeCredito.getProveedor();
+		this.proveedorCuit =  notaDeCredito.getProveedor();
 	}
 	
 	public NotaDto(NotaDeDebito notaDeCredito) {
 		this.numero= notaDeCredito.getNumero();
 		this.importe = notaDeCredito.getImporte();
 		this.fecha = notaDeCredito.getFecha();
-		this.proveedor =  notaDeCredito.getProveedor();
+		this.proveedorCuit =  notaDeCredito.getProveedor();
 	}
 
 	public int getNumero() {
@@ -63,11 +62,11 @@ public class NotaDto {
 		this.fecha = fecha;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
+	public int getProveedor() {
+		return proveedorCuit;
 	}
 
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setProveedor(int proveedorCuit) {
+		this.proveedorCuit = proveedorCuit;
 	}
 }
