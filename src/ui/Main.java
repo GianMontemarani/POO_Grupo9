@@ -81,6 +81,7 @@ public class Main {
 						menuBar.add(menu.menuProveedor(panel));
 						menuBar.add(menu.menuProducto(panel));
 						menuBar.add(menu.menuImpuestos(panel));
+						menuBar.add(menu.menuDocumentos(panel));
 						menuBar.add(menu.menuFunctions(panel));
 						
 						pView.listar(pController);
