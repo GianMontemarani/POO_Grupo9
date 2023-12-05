@@ -188,6 +188,9 @@ public class Proveedor {
 	}
 	
 	public void addCertificado(CertificadoRetencion cr) {
+		if(this.certificados == null) {
+			this.certificados = new ArrayList<CertificadoRetencion>();
+		}
 		this.certificados.add(cr);
 	}
 	

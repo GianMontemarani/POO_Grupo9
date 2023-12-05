@@ -1,7 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +13,9 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
 import controladores.ProveedorController;
-import dto.ProductoDto;
 import modelo.CertificadoRetencion;
 import modelo.TipoImpuesto;
 
@@ -27,7 +23,7 @@ public class CertificadoAgregarView {
 	private JFrame popupFrame;
 
 	public CertificadoAgregarView(JPanel panel, int cuit) {
-		popupFrame = new JFrame("Popup Frame");
+		popupFrame = new JFrame("Agregar Certificado");
 		popupFrame.setLayout(new FlowLayout());
 
 		popupFrame.setVisible(true);
@@ -93,17 +89,19 @@ public class CertificadoAgregarView {
 				Date fechaInicioParsedDate = validateDate(fechaInicioText);
 				Date fechaVencimientoParsedDate = validateDate(fechaVencimientoText);
 				if (fechaInicioParsedDate == null || fechaVencimientoParsedDate == null) {
-					System.out.println("Fecha Invalida");
 					return;
 				}
-				// TODO @Gian do you
-				CertificadoRetencion cr = new CertificadoRetencion(fechaInicioParsedDate, fechaVencimientoParsedDate,
-						tipoImpuesto);
+				
+				CertificadoRetencion cr = new CertificadoRetencion(fechaInicioParsedDate, fechaVencimientoParsedDate,tipoImpuesto);
 
-				// ProveedorController proveedorController = ProveedorController.getInstance();
-
-				// proveedorController.agregarCertifiacado(cuit, cr);
-
+				ProveedorController proveedorController;
+				try {
+					proveedorController = ProveedorController.getInstance();
+					proveedorController.agregarCertifiacado(cuit, cr);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 
