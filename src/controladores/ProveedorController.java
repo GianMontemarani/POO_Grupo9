@@ -1,6 +1,7 @@
 package controladores;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -8,9 +9,12 @@ import dao.ProveedorDao;
 import dto.CuentaCorrienteProveedorDto;
 import dto.PreciosProveedorDto;
 import dto.ProveedorDto;
+import modelo.CertificadoRetencion;
 import modelo.Factura;
+import modelo.Impuesto;
 import modelo.OrdenDePago;
 import modelo.Proveedor;
+import modelo.TipoImpuesto;
 
 public class ProveedorController {
 		private static ProveedorController INSTANCE = null;
@@ -37,7 +41,7 @@ public class ProveedorController {
 	        return dtoList;
 	    }
 		
-		public ProveedorDto getByCuit(int cuit) throws Exception {
+		public ProveedorDto getByCuit(int cuit){
 	        for (Proveedor proveedor: proveedoresList) {
 	            if (proveedor.getCuit() == cuit){
 	                return toDto(proveedor);
@@ -140,4 +144,17 @@ public class ProveedorController {
 			}
 	        return  proveedoresList;
 	    }
+		
+		public Proveedor getProveedor(int cuit) {
+			try {
+				for(Proveedor p: proveedorDao.getAll()) {
+					if(p.getCuit() == cuit) {
+						return p;
+					}
+				}
+				return null;
+			} catch (Exception e) {
+				return null;
+			}
+		}
 }

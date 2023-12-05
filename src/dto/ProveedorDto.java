@@ -3,6 +3,7 @@ package dto;
 import java.util.Date;
 import java.util.List;
 
+import modelo.CertificadoRetencion;
 import modelo.Proveedor;
 import modelo.Rubro;
 
@@ -21,10 +22,11 @@ public class ProveedorDto {
 	private String pais;
 	private String provincia;
 	private String ciudad;
+	private List<CertificadoRetencion> certificados;
 	
 	public ProveedorDto(int cuit, String razonSocial, String nombre, int telefono, String correoElectronico,
 			Date inicioActividades, List<Rubro> rubros, float maxDeuda, String calle, int altura, int codigoPostal,
-			String pais, String provincia, String ciudad) {
+			String pais, String provincia, String ciudad, List<CertificadoRetencion> certificados) {
 		this.cuit = cuit;
 		this.razonSocial = razonSocial;
 		this.nombre = nombre;
@@ -39,6 +41,7 @@ public class ProveedorDto {
 		this.pais = pais;
 		this.provincia = provincia;
 		this.ciudad = ciudad;
+		this.certificados = certificados;
 	}
 	
 	public ProveedorDto(Proveedor proveedor) {
@@ -56,7 +59,10 @@ public class ProveedorDto {
 		this.pais = proveedor.getDireccion().getPais();
 		this.provincia = proveedor.getDireccion().getProvincia();
 		this.ciudad = proveedor.getDireccion().getCiudad();
+		this.certificados = proveedor.getCertificados();
 	}
+	
+
 
 	public int getCuit() {
 		return cuit;
@@ -114,6 +120,14 @@ public class ProveedorDto {
 		this.rubros = rubros;
 	}
 
+	public List<CertificadoRetencion> getCertificados() {
+		return certificados;
+	}
+
+	public void setCertificados(List<CertificadoRetencion> certificados) {
+		this.certificados = certificados;
+	}
+	
 	public float getMaxDeuda() {
 		return maxDeuda;
 	}
