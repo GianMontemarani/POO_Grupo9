@@ -29,6 +29,7 @@ public class CertificadoRetencion {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
+
 	public TipoImpuesto getImpuesto() {
 		return impuesto;
 	}
@@ -36,9 +37,17 @@ public class CertificadoRetencion {
 	public void setImpuesto(TipoImpuesto impuesto) {
 		this.impuesto = impuesto;
 	}
-	
-	@Override
+  
+  public boolean isActive() {
+		Date now = new Date();
+		if(now.after(this.fechaVencimiento)) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+ 
+  @Override
 	public String toString() {
 		return "fechaInicio: "+fechaInicio+"fechaVencimiento: "+fechaVencimiento+"activo: "+"impuesto: "+impuesto;
-	}
-}
+  }

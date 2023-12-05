@@ -1,4 +1,4 @@
-package controladores;
+ package controladores;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,14 +25,27 @@ public class ProveedorController {
 		
 		private ProveedorController(List<Proveedor> proveedoresList) {ProveedorController.proveedoresList = proveedoresList;}
 		
+		private Proveedor getProveedorModel(int cuit) {
+			try {
+				for(Proveedor p: proveedorDao.getAll()) {
+					if(p.getCuit() == cuit) {
+						return p;
+					}
+				}
+				return null;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+		
 		public static synchronized ProveedorController getInstance() throws Exception{
 			if(INSTANCE == null) {
 				proveedorDao = new ProveedorDao(Proveedor.class,getPathOutModel(Proveedor.class.getSimpleName()));
-				INSTANCE = new ProveedorController(initModel());
+				INSTANCE = new ProveedorController(initProvedores());
 			}
 			return INSTANCE;
 		}
-		
+
 		public List<ProveedorDto> getAll() {
 	        List<ProveedorDto> dtoList = new ArrayList<>();
 	        for (Proveedor proveedor : proveedoresList) {
@@ -41,6 +54,7 @@ public class ProveedorController {
 	        return dtoList;
 	    }
 		
+
 		public ProveedorDto getByCuit(int cuit){
 	        for (Proveedor proveedor: proveedoresList) {
 	            if (proveedor.getCuit() == cuit){
@@ -52,7 +66,7 @@ public class ProveedorController {
 		
 		public void addProveedor(ProveedorDto proveedorDto) {
 			try {
-				if(getByCuit(proveedorDto.getCuit()) == null){
+				if(getProveedor(proveedorDto.getCuit()) == null){
 			           proveedoresList.add(toModel(proveedorDto));
 			           proveedorDao.save(toModel(proveedorDto));
 			    }else {
@@ -63,7 +77,7 @@ public class ProveedorController {
 			}
 		}
 		
-		public void eliminarByCuit(int cuit) {
+		public void eliminarProveedor(int cuit) {
             try {
                 for(Proveedor p: proveedoresList) {
                     if(p.getCuit() == cuit) {
@@ -79,18 +93,15 @@ public class ProveedorController {
         }
 		
 		public float getDeudaXProveedor(int cuit) {
-			float deudaTotal = 0;
+			float deuda = 0;
 			for(Proveedor p: proveedoresList) {
 				if(p.getCuit() == cuit) {
 					for(Factura f: p.getFacturas()) {
-						deudaTotal += f.getImporte();
-						for(OrdenDePago op: f.getOrdenDePago()) {
-							deudaTotal -= op.getImporte();
-						}
+						deuda += f.getDeuda();
 					}
 				}
 			}
-			return deudaTotal;
+			return deuda;
 		}
 		
 		public CuentaCorrienteProveedorDto getCuentaCorrientePorProveedor(int cuit) {
@@ -123,6 +134,16 @@ public class ProveedorController {
 			return preciosPorProveedor;
 		}
 		
+		public void agregarCertifiacado(int cuit, CertificadoRetencion cr) {
+			this.getProveedorModel(cuit).addCertificado(cr);
+			
+		}
+		
+		public void eliminarCertificado(int cuit, int index) {
+			this.getProveedorModel(cuit).deleteCertificado(index);
+			
+		}
+		
 		public static Proveedor toModel (ProveedorDto proveedorDto) {
 			return new Proveedor(proveedorDto);
 		}
@@ -136,15 +157,15 @@ public class ProveedorController {
 	        return  new File(dir+name+".json").getPath();
 	    }
 		
-		private static List<Proveedor> initModel(){
+		private static List<Proveedor> initProvedores(){
 	        try {
 	        	proveedoresList = proveedorDao.getAll();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 	        return  proveedoresList;
-	    }
-		
+    }
+  
 		public Proveedor getProveedor(int cuit) {
 			try {
 				for(Proveedor p: proveedorDao.getAll()) {

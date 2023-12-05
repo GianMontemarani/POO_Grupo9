@@ -16,7 +16,7 @@ public class PreciosProveedorDto {
 	public void setCuit(int cuit) {
 		this.cuit = cuit;
 	}
-	public String getrazonSocial() {
+	public String getRazonSocial() {
 		return razonSocial;
 	}
 	public void setrazonSocial(String razonSocial) {

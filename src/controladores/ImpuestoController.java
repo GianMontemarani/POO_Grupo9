@@ -20,7 +20,7 @@ public class ImpuestoController {
 	public static synchronized ImpuestoController getInstance() throws Exception{
 		if(INSTANCE == null) {
 			impuestoDao = new ImpuestoDao(Impuesto.class,getPathOutModel(Impuesto.class.getSimpleName()));
-			INSTANCE = new ImpuestoController(initModel());
+			INSTANCE = new ImpuestoController(initImpuestos());
 		}
 		return INSTANCE;
 	}
@@ -33,7 +33,7 @@ public class ImpuestoController {
         return dtoList;
     }
 	
-	public ImpuestoDto getById(int id){
+	public ImpuestoDto getImpuesto(int id){
         for (Impuesto impuesto: impuestosList) {
             if (impuesto.getId() == id){
                 return toDto(impuesto);
@@ -61,7 +61,7 @@ public class ImpuestoController {
         return  new File(dir+name+".json").getPath();
     }
 	
-	private static List<Impuesto> initModel(){
+	private static List<Impuesto> initImpuestos(){
         try {
         	impuestosList = impuestoDao.getAll();
 		} catch (Exception e) {

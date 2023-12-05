@@ -42,10 +42,10 @@ public class MenuApp {
 		menu = new JMenu("Funciones");
 
 		FunctionsView functionsView = new FunctionsView(panel);
-		menu.add(functionsView.FacturasPorDiaProveedor());
+		menu.add(functionsView.facturasPorDiaProveedor());
 		menu.add(functionsView.precioPorProducto());
-		menu.add(functionsView.ObtenerOrdenesDePago());
-		menu.add(functionsView.DeudaPorProveedor());
+		menu.add(functionsView.obtenerOrdenesDePago());
+		menu.add(functionsView.deudaPorProveedor());
 		menu.add(functionsView.ImpuestosRetenidos());
 		menu.add(functionsView.LibroIVA());
 		menu.add(functionsView.CuentaCorrienteDeProveedores());
