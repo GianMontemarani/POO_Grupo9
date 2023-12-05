@@ -24,15 +24,20 @@ import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
 import controladores.DocumentoController;
+import controladores.ImpuestoController;
+import controladores.ProductoController;
+import controladores.ProveedorController;
 import dto.FacturaDto;
+import dto.OrdenDeCompraDto;
+import dto.PreciosProveedorDto;
 import dto.ProveedorDto;
 import ui.ProveedorView.ButtonEditor;
 
 public class FunctionsView {
 	private JMenuItem facturasPorDiaProveedor;
 	private JMenuItem precioPorProducto;
-	private JMenuItem ObtenerOrdenesDePago;
-	private JMenuItem DeudaPorProveedor;
+	private JMenuItem obtenerOrdenesDePago;
+	private JMenuItem deudaPorProveedor;
 	private JMenuItem ImpuestosRetenidos;
 	private JMenuItem LibroIVA;
 	private JMenuItem CuentaCorrienteDeProveedores;
@@ -43,24 +48,44 @@ public class FunctionsView {
 		this.panel = panel;
 		
 		DocumentoController dController;
-		try {
-			dController = DocumentoController.getInstance();
-			
-			facturasPorDiaProveedor = new JMenuItem("Facturas Por Dia Proveedor");
-			facturasPorDiaProveedor.addActionListener(e -> {
-				reporteFacturas(dController);
-			});
-			
-			precioPorProducto = new JMenuItem("Precio Por Producto");
-			ObtenerOrdenesDePago = new JMenuItem("Obtener Ordenes De Pago");
-			DeudaPorProveedor = new JMenuItem("Deuda Por Proveedor");
-			ImpuestosRetenidos = new JMenuItem("Impuestos Retenidos");
-			LibroIVA = new JMenuItem("Libro IVA");
-			CuentaCorrienteDeProveedores = new JMenuItem("Cuenta Corriente De Proveedores");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        ProveedorController proveController;
+        ImpuestoController iController;
+        ProductoController productController;
+
+        try {
+            dController = DocumentoController.getInstance();
+            proveController = ProveedorController.getInstance();
+            productController = ProductoController.getInstance();
+            iController = ImpuestoController.getInstance();
+
+
+            facturasPorDiaProveedor = new JMenuItem("Facturas Por Dia Proveedor");
+            facturasPorDiaProveedor.addActionListener(e -> {
+                reporteFacturas(dController);
+            });
+
+            precioPorProducto = new JMenuItem("Precio Por Producto");
+            precioPorProducto.addActionListener(e -> {
+                precioPorProducto(proveController);
+            });
+
+            obtenerOrdenesDePago = new JMenuItem("Obtener Ordenes De Pago");
+            obtenerOrdenesDePago.addActionListener(e -> {
+            	listarOrdenesDePago(dController);
+            });
+
+            deudaPorProveedor = new JMenuItem("Deuda Por Proveedor");
+            deudaPorProveedor.addActionListener(e -> {
+            	mostrarDeudaPorProveedor(proveController);
+            });
+            ImpuestosRetenidos = new JMenuItem("Impuestos Retenidos");
+            LibroIVA = new JMenuItem("Libro IVA");
+            CuentaCorrienteDeProveedores = new JMenuItem("Cuenta Corriente De Proveedores");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
 		
 		
@@ -154,6 +179,178 @@ public class FunctionsView {
 		framConsulta.setVisible(true);
 	}
 	
+	public void precioPorProducto(ProveedorController proveedorController) {
+        JFrame framConsulta = new JFrame("Reporte Precio Por Producto");
+        framConsulta.setSize(300, 150);
+        framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panelConsulta = new JPanel();
+        framConsulta.add(panelConsulta);
+        panelConsulta.setLayout(null);
+
+        JLabel cuit = new JLabel("ID Producto");
+        cuit.setBounds(25, 25, 80, 25);
+        panelConsulta.add(cuit);
+
+        JTextField cuitTexto = new JTextField(20);
+        cuitTexto.setBounds(100, 20, 165, 25);
+        panelConsulta.add(cuitTexto);
+
+        JButton botonBuscar = new JButton("Buscar");
+        botonBuscar.setBounds(100, 60, 80, 25);
+        panelConsulta.add(botonBuscar);
+
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<PreciosProveedorDto> reporte = new ArrayList<PreciosProveedorDto>();
+
+                if (cuitTexto.getText().length() > 0) {
+                    reporte = proveedorController.getPrecioPorProducto(Integer.parseInt(cuitTexto.getText()));
+                } else {
+                    System.out.println("Campo CUIT vacío");
+                }
+
+                if (reporte.isEmpty()) {
+                    panelConsulta.removeAll();
+                    panelConsulta.setLayout(null);
+
+                    Object[][] datos = new Object[reporte.size()][3];
+                    for (int i = 0; i < reporte.size(); i++) {
+                    	PreciosProveedorDto fila = reporte.get(i);
+                        datos[i][0] = fila.getCuit();
+                        datos[i][1] = fila.getRazonSocial();
+                        datos[i][2] = fila.getPrecio();
+                    }
+
+                    String[] nombresColumnas = { "CUIT", "Razon Social", "Precio",  };
+
+                    DefaultTableModel modeloTabla = new DefaultTableModel(datos, nombresColumnas);
+
+                    JTable tabla = new JTable(modeloTabla) {
+                        private static final long serialVersionUID = 1L;
+
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+
+                    JScrollPane scrollPane = new JScrollPane(tabla);
+                    framConsulta.setSize(800, 600);
+                    panelConsulta.add(scrollPane, BorderLayout.CENTER);
+
+                    panelConsulta.revalidate();
+                    panelConsulta.repaint();
+                }
+            }
+        });
+
+        framConsulta.setVisible(true);
+    }
+	
+	public void listarOrdenesDePago(DocumentoController dController) {
+        JFrame framConsulta = new JFrame("Listar Ordenes de Pago");
+        framConsulta.setSize(300, 150);
+        framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panelConsulta = new JPanel();
+        framConsulta.add(panelConsulta);
+        panelConsulta.setLayout(null); 
+          
+                List<OrdenDeCompraDto> reporte = dController.getOrdenesDeComrpra();
+
+
+     
+
+                if (reporte.isEmpty()) {
+                    panelConsulta.removeAll();
+                    panelConsulta.setLayout(null);
+
+                    Object[][] datos = new Object[reporte.size()][4];
+                    for (int i = 0; i < reporte.size(); i++) {
+                    	OrdenDeCompraDto fila = reporte.get(i);
+                        datos[i][0] = fila.getNumero();
+                        datos[i][1] = fila.getImporte();
+                        datos[i][2] = fila.getFecha();
+                        datos[i][3] = fila.getProveedor();
+                    }
+
+                    String[] nombresColumnas = { "CUIT", "Razon Social", "Precio",  };
+
+                    DefaultTableModel modeloTabla = new DefaultTableModel(datos, nombresColumnas);
+
+                    JTable tabla = new JTable(modeloTabla) {
+                        private static final long serialVersionUID = 1L;
+
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+
+                    JScrollPane scrollPane = new JScrollPane(tabla);
+                    framConsulta.setSize(800, 600);
+                    panelConsulta.add(scrollPane, BorderLayout.CENTER);
+
+                    panelConsulta.revalidate();
+                    panelConsulta.repaint();
+                }
+            
+        
+
+        framConsulta.setVisible(true);
+    }
+	
+	
+	
+	public void mostrarDeudaPorProveedor(ProveedorController proveedorController) {
+        JFrame framConsulta = new JFrame("Obtener Deuda por Proveedor");
+        framConsulta.setSize(300, 150);
+        framConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panelConsulta = new JPanel();
+        framConsulta.add(panelConsulta);
+        panelConsulta.setLayout(null);
+
+        JLabel cuit = new JLabel("CUIT");
+        cuit.setBounds(25, 25, 80, 25);
+        panelConsulta.add(cuit);
+
+        JTextField cuitTexto = new JTextField(20);
+        cuitTexto.setBounds(100, 20, 165, 25);
+        panelConsulta.add(cuitTexto);
+
+        JButton botonBuscar = new JButton("Buscar");
+        botonBuscar.setBounds(100, 60, 80, 25);
+        panelConsulta.add(botonBuscar);
+
+        botonBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               float deuda = 0;
+               
+               
+               
+
+                if (cuitTexto.getText().length() > 0) {
+                    deuda = proveedorController.getDeudaXProveedor(Integer.parseInt(cuitTexto.getText()));
+                } else {
+                    System.out.println("Campo CUIT vacío");
+                }
+                
+                deuda = 100;
+                JLabel deudaLabel = new JLabel("DEUDA:");
+                deudaLabel.setBounds(50, 25, 80, 25);
+                panelConsulta.add(deudaLabel);
+                
+                JLabel deudaMonto = new JLabel(String.valueOf(deuda));
+                deudaMonto.setBounds(50, 25, 80, 25);
+                panelConsulta.add(deudaMonto);
+            }
+        });
+
+        framConsulta.setVisible(true);
+    }
+	
 	private static JFormattedTextField createDateTextField() {
 		MaskFormatter maskFormatter = null;
 		try {
@@ -184,11 +381,11 @@ public class FunctionsView {
 	public JMenuItem precioPorProducto() {
 		return precioPorProducto;
 	}
-	public JMenuItem ObtenerOrdenesDePago() {
-		return ObtenerOrdenesDePago;
+	public JMenuItem obtenerOrdenesDePago() {
+		return obtenerOrdenesDePago;
 	}
-	public JMenuItem DeudaPorProveedor() {
-		return DeudaPorProveedor;
+	public JMenuItem deudaPorProveedor() {
+		return deudaPorProveedor;
 	}
 	public JMenuItem ImpuestosRetenidos() {
 		return ImpuestosRetenidos;
