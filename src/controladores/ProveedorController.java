@@ -140,4 +140,17 @@ public class ProveedorController {
 			}
 	        return  proveedoresList;
 	    }
+		
+		public Proveedor getProveedor(int cuit) {
+			try {
+				for(Proveedor p: proveedorDao.getAll()) {
+					if(p.getCuit() == cuit) {
+						return p;
+					}
+				}
+				return null;
+			} catch (Exception e) {
+				return null;
+			}
+		}
 }

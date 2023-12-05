@@ -160,7 +160,6 @@ public class ProveedorView {
 		inicioActividad.setBounds(10, 170, 120, 25);
 		panel.add(inicioActividad);
 		JFormattedTextField dateTextField = createDateTextField();
-
 		panel.add(dateTextField);
 
 		/* Rubros */
@@ -329,7 +328,6 @@ public class ProveedorView {
 			super(textField);
 			this.button = button;
 
-			// @gian aca esta lo que pasa al clickear el boton xd
 			button.addActionListener(e -> {
 
 				fireEditingStopped();
