@@ -210,7 +210,7 @@ public class DocumentoController {
 		}
 	}
 
-	public void eliminarFacturaById(int id) {
+	public void eliminarFactura(int id) {
         try {
             for(Factura f: facturas) {
                 if(f.getNumero() == id) {
@@ -225,7 +225,7 @@ public class DocumentoController {
         return;
     }
 
-	public void elimiarNotasDeCreditoById(int id) {
+	public void elimiarNotasDeCredito(int id) {
 		try {
 			for(NotaDeCredito n: notasDeCredito) {
 				if(n.getNumero() == id) {
@@ -240,7 +240,7 @@ public class DocumentoController {
 		return;
 	}
 
-	public void elimiarNotasDeDebitoById(int id) {
+	public void elimiarNotasDeDebito(int id) {
 		try {
 			for(NotaDeDebito n: notasDeDebito) {
 				if(n.getNumero() == id) {
@@ -255,7 +255,7 @@ public class DocumentoController {
 		return;
 	}
 
-	public void eliminarOrdenDeCompraById(int id) {
+	public void eliminarOrdenDeCompra(int id) {
 		try {
 			for(OrdenDeCompra o: ordenesDeCompra) {
 				if(o.getNumero() == id) {
@@ -270,7 +270,7 @@ public class DocumentoController {
 		return;
 	}
 
-	public void eliminarChequeById(int id) {
+	public void eliminarCheque(int id) {
 		try {
 			for(Cheque c: cheques) {
 				if(c.getNumero() == id) {

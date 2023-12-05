@@ -33,7 +33,7 @@ public class ProductoController {
         return dtoList;
     }
 	
-	public ProductoDto getById(int id) throws Exception {
+	public ProductoDto getProducto(int id) throws Exception {
         for (Producto Producto: productosList) {
             if (Producto.getId() == id){
                 return toDto(Producto);

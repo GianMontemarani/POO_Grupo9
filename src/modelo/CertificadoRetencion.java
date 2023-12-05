@@ -5,13 +5,11 @@ import java.util.Date;
 public class CertificadoRetencion {
 	private Date fechaInicio;
 	private Date fechaVencimiento;
-	private Boolean activo;
 	private Impuesto impuesto;
 	
-	public CertificadoRetencion(Date fechaInicio, Date fechaVencimiento, Boolean activo, Impuesto impuesto) {
+	public CertificadoRetencion(Date fechaInicio, Date fechaVencimiento, Impuesto impuesto) {
 		this.fechaInicio = fechaInicio;
 		this.fechaVencimiento = fechaVencimiento;
-		this.activo = activo;
 		this.impuesto = impuesto;
 	}
 
@@ -31,19 +29,20 @@ public class CertificadoRetencion {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public Boolean getActivo() {
-		return activo;
-	}
-
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
-
 	public Impuesto getImpuesto() {
 		return impuesto;
 	}
 
 	public void setImpuesto(Impuesto impuesto) {
 		this.impuesto = impuesto;
+	}
+	
+	public boolean isActive() {
+		Date now = new Date();
+		if(now.after(this.fechaVencimiento)) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 }

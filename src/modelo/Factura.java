@@ -10,7 +10,7 @@ public class Factura extends Documento {
 	private OrdenDeCompra ordenCompra;
 	private List<ItemDeFactura> productos;
 	private List<Impuesto> impuestos;
-	private List<OrdenDePago> ordenDePago;
+	private List<OrdenDePago> ordenesDePago;
 	private float totalARetener;
 	private List<ItemDeFactura> items;
 
@@ -21,7 +21,7 @@ public class Factura extends Documento {
 		this.ordenCompra = ordenCompra;
 		this.productos = productos;
 		this.impuestos = impuestos;
-		this.ordenDePago = ordenDePago;
+		this.ordenesDePago = ordenDePago;
 		this.totalARetener = totalARetener;
 		this.items = items;
 	}
@@ -31,7 +31,7 @@ public class Factura extends Documento {
 		this.ordenCompra = facturaDto.getOrdenCompra();
 		this.productos = facturaDto.getProductos();
 		this.impuestos = facturaDto.getImpuestos();
-		this.ordenDePago = facturaDto.getOrdenDePago();
+		this.ordenesDePago = facturaDto.getOrdenDePago();
 		this.totalARetener = facturaDto.getTotalARetener();
 		this.items = facturaDto.getItems();
 	}
@@ -61,11 +61,11 @@ public class Factura extends Documento {
 	}
 
 	public List<OrdenDePago> getOrdenDePago() {
-		return ordenDePago;
+		return ordenesDePago;
 	}
 
 	public void setOrdenDePago(List<OrdenDePago> ordenDePago) {
-		this.ordenDePago = ordenDePago;
+		this.ordenesDePago = ordenDePago;
 	}
 
 	public float getTotalARetener() {
@@ -86,7 +86,7 @@ public class Factura extends Documento {
 	
 	public float getDeuda() {
 		float importe = this.getImporte();
-		for(OrdenDePago op: this.ordenDePago) {
+		for(OrdenDePago op: this.ordenesDePago) {
 			importe -= op.getImporte();
 		}
 		return importe;

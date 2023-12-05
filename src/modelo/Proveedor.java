@@ -186,4 +186,12 @@ public class Proveedor {
 		}
 		return facturas;
 	}
+	
+	public void addCertificado(CertificadoRetencion cr) {
+		this.certificados.add(cr);
+	}
+	
+	public void deleteCertificado(int index) {
+		this.certificados.remove(index);
+	}
 }

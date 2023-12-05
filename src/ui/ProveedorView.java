@@ -335,7 +335,7 @@ public class ProveedorView {
 
 				System.out.println("cuit es: " + datos[selectedRow][0]);
 				int cuit = (int) datos[selectedRow][0];
-				proveedorController.eliminarByCuit(cuit);
+				proveedorController.eliminarProveedor(cuit);
 				view.listar(proveedorController);
 			});
 		}
