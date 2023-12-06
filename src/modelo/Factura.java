@@ -86,8 +86,10 @@ public class Factura extends Documento {
 	
 	public float getDeuda() {
 		float importe = this.getImporte();
-		for(OrdenDePago op: this.ordenesDePago) {
-			importe -= op.getImporte();
+		if(this.ordenesDePago != null) {
+			for(OrdenDePago op: this.ordenesDePago) {
+				importe -= op.getImporte();
+			}
 		}
 		return importe;
 	}

@@ -49,6 +49,7 @@ public class DocumentoController {
 		DocumentoController.cheques = cheques;
 		syncOcEnFacturas(this);
 		syncNotasEnOp(this);
+		syncFacturasProveedor();
 	}
 	
 	public OrdenDeCompra getOcModel(int id) {
@@ -462,5 +463,17 @@ public class DocumentoController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void syncFacturasProveedor() {
+		try {
+			ProveedorController pController = ProveedorController.getInstance();
+			for(Factura f: facturas) {
+				addDocumentToProveedor(f.getProveedor(), f);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

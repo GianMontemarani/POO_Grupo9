@@ -136,7 +136,7 @@ public class FunctionsView {
 				}
 				
 				
-				if(reporte.isEmpty()) {
+				if(!reporte.isEmpty()) {
 					panelConsulta.removeAll();
 					panelConsulta.setLayout(null);
 					
@@ -164,6 +164,8 @@ public class FunctionsView {
 							return column == 7;
 						};
 					};
+					
+					panelConsulta.removeAll();
 					
 					JScrollPane scrollPane = new JScrollPane(tabla);
 					framConsulta.setSize(1000, 750);
